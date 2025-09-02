@@ -1,0 +1,39 @@
+# DarkGhost Node Configuration File (Example)
+
+# Network settings
+network=mainnet
+port=31313
+rpc_port=31314
+rpc_bind=127.0.0.1
+rpc_user=darkghost
+rpc_password=your_secure_password_here
+
+# Consensus settings
+algorithm=RandomXv2
+block_time=120
+difficulty_adjustment_interval=10
+
+# Privacy settings
+ring_size=11
+bulletproofs_enabled=1
+
+# Blockchain settings
+max_supply=10000000000000000
+halving_interval=1051200
+
+# Mining settings
+mining_enabled=1
+miner_threads=4
+miner_address=DG1YourMiningAddressHere
+
+# Wallet settings
+wallet_dir=./wallets
+view_key_scan_enabled=1
+
+# Logging
+log_level=info
+log_file=./logs/darkghost.log
+
+# Peer settings
+max_connections=125
+peer_discovery_enabled=1

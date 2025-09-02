@@ -1,0 +1,33 @@
+# Build directories
+build/
+obj/
+bin/
+
+# IDE files
+*.swp
+*.swo
+*.swn
+*.tmp
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Log files
+logs/
+
+# Wallet files
+wallets/
+
+# Configuration files with sensitive data
+*.conf
+!pool.conf
+!darkghost.conf.example
+
+# Executables
+*.exe
+*.out
+
+# CMake build directory
+cmake-build-*/

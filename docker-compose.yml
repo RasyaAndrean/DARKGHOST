@@ -1,0 +1,44 @@
+version: '3.8'
+
+services:
+  darkghost-node:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: darkghost-node
+    ports:
+      - '31313:31313'
+      - '31314:31314'
+    volumes:
+      - darkghost-data:/home/darkghost/.darkghost
+      - ./darkghost.conf:/home/darkghost/.darkghost/darkghost.conf:ro
+    environment:
+      - DARKGHOST_NETWORK=mainnet
+    restart: unless-stopped
+    networks:
+      - darkghost-network
+
+  darkghost-wallet:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: darkghost-wallet
+    depends_on:
+      - darkghost-node
+    volumes:
+      - darkghost-wallets:/home/darkghost/.darkghost/wallets
+      - ./wallet.conf:/home/darkghost/.darkghost/wallet.conf:ro
+    command: ['/home/darkghost/darkghost/build/darkghost_wallet']
+    restart: unless-stopped
+    networks:
+      - darkghost-network
+
+volumes:
+  darkghost-data:
+    driver: local
+  darkghost-wallets:
+    driver: local
+
+networks:
+  darkghost-network:
+    driver: bridge
