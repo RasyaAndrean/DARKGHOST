@@ -1,98 +1,88 @@
 # DarkGhost API Documentation
 
+This document describes the DarkGhost API, including JSON-RPC methods, REST endpoints, and WebSocket interfaces.
+
 ## Overview
 
-The DarkGhost API provides programmatic access to node functionality, wallet operations, and blockchain data. This documentation covers the JSON-RPC API available for interacting with DarkGhost nodes.
+DarkGhost provides multiple API interfaces for interacting with the network:
+- **JSON-RPC**: Traditional JSON-RPC interface
+- **REST**: HTTP-based RESTful API
+- **WebSocket**: Real-time event notifications
+- **Library Bindings**: Native libraries for various languages
 
-## API Access
+## JSON-RPC API
 
-### Endpoint
-
-```
-http://localhost:31314/json_rpc
-```
+### Connection
+The JSON-RPC API is available at:
+- **Mainnet**: `http://127.0.0.1:18081/json_rpc`
+- **Testnet**: `http://127.0.0.1:28081/json_rpc`
+- **Devnet**: `http://127.0.0.1:38081/json_rpc`
 
 ### Authentication
-
-API access requires RPC authentication:
-
-```ini
-# darkghost.conf
-rpc-login=username:password
-```
-
-### Example Request
-
+RPC authentication can be enabled with:
 ```bash
-curl -u username:password -H "Content-Type: application/json" \
-  -d '{"jsonrpc":"2.0","id":"0","method":"get_info"}' \
-  http://localhost:31314/json_rpc
+./darkghostd --rpc-login username:password
 ```
 
-## Core Methods
+### Common Methods
 
-### get_info
-
-Returns general information about the node and blockchain.
+#### get_info
+Get general information about the node and network.
 
 **Parameters**: None
 
 **Response**:
-
 ```json
 {
-  "jsonrpc": "2.0",
   "id": "0",
+  "jsonrpc": "2.0",
   "result": {
-    "version": "1.0.0",
     "height": 12345,
     "target_height": 12345,
-    "difficulty": 1000000,
+    "difficulty": 123456789,
     "target": 120,
-    "tx_count": 56789,
-    "tx_pool_size": 12,
+    "tx_count": 123456,
+    "tx_pool_size": 10,
     "alt_blocks_count": 0,
     "outgoing_connections_count": 8,
     "incoming_connections_count": 5,
     "rpc_connections_count": 1,
-    "white_peerlist_size": 100,
-    "grey_peerlist_size": 50,
+    "white_peerlist_size": 500,
+    "grey_peerlist_size": 100,
     "mainnet": true,
     "testnet": false,
-    "stagenet": false,
+    "devnet": false,
     "nettype": "mainnet",
+    "top_block_hash": "abc123...",
     "cumulative_difficulty": 123456789012345,
-    "block_size_limit": 1048576,
-    "block_size_median": 524288,
-    "start_time": 1756742400
+    "block_size_limit": 20000,
+    "block_size_median": 15000,
+    "status": "OK"
   }
 }
 ```
 
-### get_height
-
-Returns the current blockchain height.
+#### get_block_count
+Get the current block count.
 
 **Parameters**: None
 
 **Response**:
-
 ```json
 {
-  "jsonrpc": "2.0",
   "id": "0",
+  "jsonrpc": "2.0",
   "result": {
-    "height": 12345
+    "count": 12345,
+    "status": "OK"
   }
 }
 ```
 
-### get_block_hash
-
-Returns the block hash at a given height.
+#### get_block_hash
+Get the block hash at a specific height.
 
 **Parameters**:
-
 ```json
 {
   "height": 12345
@@ -100,168 +90,129 @@ Returns the block hash at a given height.
 ```
 
 **Response**:
-
 ```json
 {
-  "jsonrpc": "2.0",
   "id": "0",
+  "jsonrpc": "2.0",
   "result": {
-    "block_hash": "a1b2c3d4e5f6..."
+    "hash": "abc123...",
+    "status": "OK"
   }
 }
 ```
 
-### get_block
-
-Returns detailed information about a block.
+#### get_block_template
+Get a block template for mining.
 
 **Parameters**:
-
 ```json
 {
-  "hash": "a1b2c3d4e5f6...",
-  "height": 12345
+  "wallet_address": "dg1abc123...",
+  "reserve_size": 16
 }
 ```
 
 **Response**:
-
 ```json
 {
-  "jsonrpc": "2.0",
   "id": "0",
+  "jsonrpc": "2.0",
   "result": {
-    "block_header": {
-      "height": 12345,
-      "hash": "a1b2c3d4e5f6...",
-      "timestamp": 1756742400,
-      "prev_hash": "f6e5d4c3b2a1...",
-      "nonce": 123456789,
-      "miner_tx_hash": "9f8e7d6c5b4a...",
-      "difficulty": 1000000,
-      "reward": 5000000000,
-      "block_size": 10240,
-      "tx_hashes": ["tx1...", "tx2...", "tx3..."]
-    }
+    "blocktemplate_blob": "0100...",
+    "blockhashing_blob": "0100...",
+    "difficulty": 123456789,
+    "expected_reward": 5000000000,
+    "height": 12345,
+    "prev_hash": "def456...",
+    "reserved_offset": 128,
+    "status": "OK"
   }
 }
 ```
 
-## Transaction Methods
-
-### get_transactions
-
-Returns information about transactions.
+#### submit_block
+Submit a mined block to the network.
 
 **Parameters**:
+```json
+[
+  "0100..."
+]
+```
 
+**Response**:
 ```json
 {
-  "tx_hashes": ["tx1...", "tx2..."]
+  "id": "0",
+  "jsonrpc": "2.0",
+  "result": {
+    "status": "OK"
+  }
+}
+```
+
+#### get_transactions
+Get transaction information.
+
+**Parameters**:
+```json
+{
+  "txs_hashes": [
+    "abc123...",
+    "def456..."
+  ]
 }
 ```
 
 **Response**:
-
 ```json
 {
-  "jsonrpc": "2.0",
   "id": "0",
+  "jsonrpc": "2.0",
   "result": {
-    "txs": [
-      {
-        "tx_hash": "tx1...",
-        "tx_json": "{...}",
-        "block_height": 12345,
-        "block_timestamp": 1756742400
-      }
+    "txs_as_hex": [
+      "0100..."
     ],
-    "txs_as_hex": ["hex1...", "hex2..."],
-    "missed_tx": []
+    "txs_as_json": [
+      "{\"version\":1,...}"
+    ],
+    "tx_hashes": [
+      "abc123..."
+    ],
+    "status": "OK"
   }
 }
 ```
 
-### send_raw_transaction
-
-Submits a raw transaction to the network.
+#### send_raw_transaction
+Broadcast a raw transaction to the network.
 
 **Parameters**:
-
 ```json
 {
-  "tx_as_hex": "0x...",
+  "tx_as_hex": "0100...",
   "do_not_relay": false
 }
 ```
 
 **Response**:
-
 ```json
 {
-  "jsonrpc": "2.0",
   "id": "0",
+  "jsonrpc": "2.0",
   "result": {
-    "tx_hash": "tx1...",
-    "tx_blob": "0x...",
+    "tx_hash": "abc123...",
     "status": "OK"
   }
 }
 ```
 
-### start_mining
+### Wallet Methods
 
-Starts mining on the node.
+#### create_wallet
+Create a new wallet.
 
 **Parameters**:
-
-```json
-{
-  "miner_address": "DG1YourMiningAddressHere",
-  "threads_count": 4,
-  "do_background_mining": false,
-  "ignore_battery": false
-}
-```
-
-**Response**:
-
-```json
-{
-  "jsonrpc": "2.0",
-  "id": "0",
-  "result": {
-    "status": "OK"
-  }
-}
-```
-
-### stop_mining
-
-Stops mining on the node.
-
-**Parameters**: None
-
-**Response**:
-
-```json
-{
-  "jsonrpc": "2.0",
-  "id": "0",
-  "result": {
-    "status": "OK"
-  }
-}
-```
-
-## Wallet Methods
-
-### create_wallet
-
-Creates a new wallet.
-
-**Parameters**:
-
 ```json
 {
   "filename": "my_wallet",
@@ -271,25 +222,22 @@ Creates a new wallet.
 ```
 
 **Response**:
-
 ```json
 {
-  "jsonrpc": "2.0",
   "id": "0",
+  "jsonrpc": "2.0",
   "result": {
-    "seed": "sequence of 25 words",
-    "address": "DG1WalletAddressHere",
+    "address": "dg1abc123...",
+    "seed": "sequence of words...",
     "status": "OK"
   }
 }
 ```
 
-### open_wallet
-
-Opens an existing wallet.
+#### open_wallet
+Open an existing wallet.
 
 **Parameters**:
-
 ```json
 {
   "filename": "my_wallet",
@@ -298,509 +246,506 @@ Opens an existing wallet.
 ```
 
 **Response**:
-
 ```json
 {
-  "jsonrpc": "2.0",
   "id": "0",
+  "jsonrpc": "2.0",
   "result": {
-    "address": "DG1WalletAddressHere",
+    "address": "dg1abc123...",
     "status": "OK"
   }
 }
 ```
 
-### close_wallet
-
-Closes the currently open wallet.
+#### close_wallet
+Close the currently open wallet.
 
 **Parameters**: None
 
 **Response**:
-
 ```json
 {
-  "jsonrpc": "2.0",
   "id": "0",
+  "jsonrpc": "2.0",
   "result": {
     "status": "OK"
   }
 }
 ```
 
-### get_balance
-
-Returns the wallet's balance.
+#### get_balance
+Get the wallet balance.
 
 **Parameters**: None
 
 **Response**:
-
 ```json
 {
-  "jsonrpc": "2.0",
   "id": "0",
+  "jsonrpc": "2.0",
   "result": {
-    "balance": 1000000000000,
-    "unlocked_balance": 500000000000,
-    "multisig_import_needed": false,
+    "balance": 100000000000,
+    "unlocked_balance": 50000000000,
     "status": "OK"
   }
 }
 ```
 
-### get_address
-
-Returns the wallet's address.
+#### get_address
+Get the wallet address.
 
 **Parameters**: None
 
 **Response**:
-
 ```json
 {
-  "jsonrpc": "2.0",
   "id": "0",
+  "jsonrpc": "2.0",
   "result": {
-    "address": "DG1WalletAddressHere",
+    "address": "dg1abc123...",
     "status": "OK"
   }
 }
 ```
 
-### transfer
-
-Sends DG to a specified address.
+#### transfer
+Send a transaction.
 
 **Parameters**:
-
 ```json
 {
   "destinations": [
     {
-      "amount": 10000000000,
-      "address": "DG1RecipientAddressHere"
+      "amount": 1000000000,
+      "address": "dg1def456..."
     }
   ],
-  "priority": 2,
-  "ring_size": 11,
+  "mixin": 10,
   "unlock_time": 0,
-  "payment_id": "",
-  "get_tx_key": true
+  "payment_id": ""
 }
 ```
 
 **Response**:
-
 ```json
 {
-  "jsonrpc": "2.0",
   "id": "0",
+  "jsonrpc": "2.0",
   "result": {
-    "tx_hash": "tx1...",
-    "tx_key": "key1...",
-    "amount": 10000000000,
-    "fee": 10000000,
-    "tx_blob": "0x...",
-    "tx_metadata": "metadata...",
-    "multisig_txset": "",
-    "unsigned_txset": "",
+    "tx_hash": "abc123...",
+    "tx_key": "def456...",
+    "amount": 1000000000,
+    "fee": 10000,
     "status": "OK"
   }
 }
 ```
 
-### get_transfers
+## REST API
 
-Returns the wallet's transaction history.
+### Base URL
+The REST API is available at:
+- **Mainnet**: `http://127.0.0.1:18081`
+- **Testnet**: `http://127.0.0.1:28081`
+- **Devnet**: `http://127.0.0.1:38081`
 
-**Parameters**:
+### Endpoints
 
+#### GET /block/count
+Get the current block count.
+
+**Response**:
 ```json
 {
-  "in": true,
-  "out": true,
-  "pending": true,
-  "failed": true,
-  "pool": true
+  "count": 12345,
+  "status": "success"
+}
+```
+
+#### GET /block/{height}
+Get block information by height.
+
+**Response**:
+```json
+{
+  "block": {
+    "height": 12345,
+    "hash": "abc123...",
+    "timestamp": 1234567890,
+    "difficulty": 123456789,
+    "tx_count": 5,
+    "size": 15000
+  },
+  "status": "success"
+}
+```
+
+#### GET /transaction/{hash}
+Get transaction information by hash.
+
+**Response**:
+```json
+{
+  "transaction": {
+    "hash": "abc123...",
+    "amount": 1000000000,
+    "fee": 10000,
+    "size": 2000,
+    "confirmations": 10
+  },
+  "status": "success"
+}
+```
+
+#### GET /address/{address}
+Get address information.
+
+**Response**:
+```json
+{
+  "address": "dg1abc123...",
+  "balance": 100000000000,
+  "tx_count": 25,
+  "received": 200000000000
+}
+```
+
+#### POST /transaction/send
+Send a transaction.
+
+**Request**:
+```json
+{
+  "destinations": [
+    {
+      "amount": 1000000000,
+      "address": "dg1def456..."
+    }
+  ],
+  "mixin": 10
 }
 ```
 
 **Response**:
-
 ```json
 {
-  "jsonrpc": "2.0",
-  "id": "0",
-  "result": {
-    "in": [
-      {
-        "txid": "tx1...",
-        "payment_id": "",
-        "height": 12345,
-        "timestamp": 1756742400,
-        "amount": 10000000000,
-        "fee": 0,
-        "address": "DG1WalletAddressHere",
-        "confirmations": 10
-      }
-    ],
-    "out": [
-      {
-        "txid": "tx2...",
-        "payment_id": "",
-        "height": 12340,
-        "timestamp": 1756740000,
-        "amount": 5000000000,
-        "fee": 10000000,
-        "address": "DG1RecipientAddressHere",
-        "confirmations": 15
-      }
-    ]
-  }
+  "tx_hash": "abc123...",
+  "status": "success"
 }
 ```
 
-## Network Methods
+## WebSocket API
 
-### get_connections
+### Connection
+WebSocket connections are available at:
+- **Mainnet**: `ws://127.0.0.1:18082`
+- **Testnet**: `ws://127.0.0.1:28082`
+- **Devnet**: `ws://127.0.0.1:38082`
 
-Returns information about the node's connections.
+### Events
 
-**Parameters**: None
+#### new_block
+Emitted when a new block is added to the blockchain.
 
-**Response**:
-
+**Data**:
 ```json
 {
-  "jsonrpc": "2.0",
-  "id": "0",
-  "result": {
-    "connections": [
-      {
-        "incoming": true,
-        "ip": "192.168.1.100",
-        "port": 31313,
-        "peer_id": "peer1...",
-        "recv_count": 100,
-        "recv_idle_time": 5,
-        "send_count": 50,
-        "send_idle_time": 10,
-        "state": "state_normal",
-        "live_time": 3600,
-        "avg_download": 1024,
-        "current_download": 512,
-        "avg_upload": 512,
-        "current_upload": 256
-      }
-    ]
-  }
+  "height": 12345,
+  "hash": "abc123...",
+  "timestamp": 1234567890,
+  "difficulty": 123456789,
+  "tx_count": 5
 }
 ```
 
-### get_peer_list
+#### new_transaction
+Emitted when a new transaction is received.
 
-Returns the node's peer list.
-
-**Parameters**: None
-
-**Response**:
-
+**Data**:
 ```json
 {
-  "jsonrpc": "2.0",
-  "id": "0",
-  "result": {
-    "white_list": [
-      {
-        "host": "192.168.1.100",
-        "port": 31313,
-        "last_seen": 1756742400
-      }
-    ],
-    "gray_list": [
-      {
-        "host": "192.168.1.101",
-        "port": 31313,
-        "last_seen": 1756740000
-      }
-    ]
-  }
+  "hash": "abc123...",
+  "amount": 1000000000,
+  "fee": 10000
 }
 ```
 
-## Utility Methods
+#### mempool_update
+Emitted when the mempool is updated.
 
-### validate_address
-
-Validates a DarkGhost address.
-
-**Parameters**:
-
+**Data**:
 ```json
 {
-  "address": "DG1WalletAddressHere",
-  "any_net_type": false,
-  "allow_openalias": false
+  "tx_count": 10,
+  "total_fee": 100000
 }
 ```
 
-**Response**:
+### Subscription
+Subscribe to events:
+```javascript
+const ws = new WebSocket('ws://127.0.0.1:18082');
 
-```json
-{
-  "jsonrpc": "2.0",
-  "id": "0",
-  "result": {
-    "valid": true,
-    "integrated": false,
-    "subaddress": false,
-    "nettype": "mainnet",
-    "status": "OK"
-  }
-}
+ws.onopen = function() {
+  // Subscribe to new blocks
+  ws.send(JSON.stringify({
+    "method": "subscribe",
+    "params": ["new_block"]
+  }));
+};
+
+ws.onmessage = function(event) {
+  const data = JSON.parse(event.data);
+  console.log('Received:', data);
+};
 ```
 
-### get_version
+## Library Bindings
 
-Returns the node's version information.
+### C++ Library
+```cpp
+#include "darkghost/api.h"
 
-**Parameters**: None
+DarkGhost::Client client("127.0.0.1", 18081);
 
-**Response**:
+auto info = client.getInfo();
+std::cout << "Block height: " << info.height << std::endl;
 
-```json
-{
-  "jsonrpc": "2.0",
-  "id": "0",
-  "result": {
-    "version": 1000000,
-    "release": "1.0.0",
-    "status": "OK"
-  }
-}
+auto balance = client.getBalance();
+std::cout << "Balance: " << balance.balance << std::endl;
+```
+
+### Python Library
+```python
+from darkghost import Client
+
+client = Client("127.0.0.1", 18081)
+
+info = client.get_info()
+print(f"Block height: {info['height']}")
+
+balance = client.get_balance()
+print(f"Balance: {balance['balance']}")
+```
+
+### JavaScript Library
+```javascript
+const DarkGhost = require('darkghost-js');
+
+const client = new DarkGhost.Client('127.0.0.1', 18081);
+
+client.getInfo().then(info => {
+  console.log(`Block height: ${info.height}`);
+});
+
+client.getBalance().then(balance => {
+  console.log(`Balance: ${balance.balance}`);
+});
 ```
 
 ## Error Handling
 
-### Common Error Codes
-
-| Code   | Message          | Description                                       |
-| ------ | ---------------- | ------------------------------------------------- |
-| -1     | Parse error      | Invalid JSON was received                         |
-| -32600 | Invalid Request  | The JSON sent is not a valid Request object       |
-| -32601 | Method not found | The method does not exist                         |
-| -32602 | Invalid params   | Invalid method parameter(s)                       |
-| -32603 | Internal error   | Internal JSON-RPC error                           |
-| -32700 | Server error     | Reserved for implementation-defined server-errors |
-
-### Example Error Response
-
+### JSON-RPC Errors
+JSON-RPC errors follow the standard format:
 ```json
 {
-  "jsonrpc": "2.0",
   "id": "0",
+  "jsonrpc": "2.0",
   "error": {
-    "code": -32601,
-    "message": "Method not found"
+    "code": -1,
+    "message": "Error message"
   }
 }
 ```
 
-## JavaScript Example
+### Common Error Codes
+- **-1**: General error
+- **-2**: Invalid parameters
+- **-3**: Not found
+- **-4**: Insufficient funds
+- **-5**: Transaction rejected
+- **-6**: Network error
 
-```javascript
-const DarkGhostAPI = {
-  url: 'http://localhost:31314/json_rpc',
-  username: 'rpc_user',
-  password: 'rpc_password',
+### REST API Errors
+REST API errors return appropriate HTTP status codes:
+- **400**: Bad request
+- **401**: Unauthorized
+- **404**: Not found
+- **500**: Internal server error
 
-  async call(method, params = {}) {
-    const response = await fetch(this.url, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: 'Basic ' + btoa(this.username + ':' + this.password),
-      },
-      body: JSON.stringify({
-        jsonrpc: '2.0',
-        id: '0',
-        method: method,
-        params: params,
-      }),
-    });
+## Rate Limiting
 
-    return await response.json();
-  },
+### Limits
+API requests are rate-limited to prevent abuse:
+- **JSON-RPC**: 100 requests per minute per IP
+- **REST**: 200 requests per minute per IP
+- **WebSocket**: 10 concurrent connections per IP
 
-  async getBalance() {
-    return await this.call('get_balance');
-  },
-
-  async getTransactions() {
-    return await this.call('get_transfers', {
-      in: true,
-      out: true,
-    });
-  },
-
-  async sendTransaction(address, amount) {
-    return await this.call('transfer', {
-      destinations: [
-        {
-          amount: amount,
-          address: address,
-        },
-      ],
-      priority: 2,
-      ring_size: 11,
-    });
-  },
-};
-
-// Usage
-DarkGhostAPI.getBalance().then(result => {
-  console.log('Balance:', result.result.balance);
-});
+### Headers
+Rate limit information is provided in response headers:
+```
+X-RateLimit-Limit: 100
+X-RateLimit-Remaining: 95
+X-RateLimit-Reset: 1234567890
 ```
 
-## Python Example
+## Authentication
 
-```python
-import requests
-import json
+### RPC Authentication
+Enable RPC authentication with:
+```bash
+./darkghostd --rpc-login username:password
+```
 
-class DarkGhostAPI:
-    def __init__(self, url='http://localhost:31314/json_rpc',
-                 username='rpc_user', password='rpc_password'):
-        self.url = url
-        self.auth = (username, password)
-        self.headers = {'content-type': 'application/json'}
+### Wallet Authentication
+Wallet authentication is handled through wallet files and passwords.
 
-    def call(self, method, params=None):
-        payload = {
-            "jsonrpc": "2.0",
-            "id": "0",
-            "method": method
-        }
+### API Keys
+For third-party services, API keys can be used:
+```bash
+./darkghostd --api-key abc123def456
+```
 
-        if params:
-            payload["params"] = params
+## Examples
 
-        response = requests.post(
-            self.url,
-            data=json.dumps(payload),
-            headers=self.headers,
-            auth=self.auth
-        )
+### Node Status Check
+```bash
+curl -X POST http://127.0.0.1:18081/json_rpc \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "jsonrpc": "2.0",
+    "id": "0",
+    "method": "get_info"
+  }'
+```
 
-        return response.json()
+### Wallet Balance Check
+```bash
+curl -X POST http://127.0.0.1:18081/json_rpc \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "jsonrpc": "2.0",
+    "id": "0",
+    "method": "get_balance"
+  }'
+```
 
-    def get_info(self):
-        return self.call('get_info')
-
-    def get_balance(self):
-        return self.call('get_balance')
-
-    def transfer(self, address, amount):
-        params = {
-            'destinations': [{
-                'amount': amount,
-                'address': address
-            }],
-            'priority': 2,
-            'ring_size': 11
-        }
-        return self.call('transfer', params)
-
-# Usage
-api = DarkGhostAPI()
-info = api.get_info()
-print(f"Blockchain height: {info['result']['height']}")
+### Transaction Sending
+```bash
+curl -X POST http://127.0.0.1:18081/json_rpc \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "jsonrpc": "2.0",
+    "id": "0",
+    "method": "transfer",
+    "params": {
+      "destinations": [{
+        "amount": 1000000000,
+        "address": "dg1abc123..."
+      }],
+      "mixin": 10
+    }
+  }'
 ```
 
 ## Security Considerations
 
-### RPC Security
+### Transport Security
+- **HTTPS**: Use HTTPS for production deployments
+- **TLS**: Enable TLS for RPC connections
+- **Certificates**: Use valid SSL certificates
 
-1. **Authentication**: Always use strong RPC credentials
-2. **Network Security**: Restrict RPC access to trusted sources
-3. **Encryption**: Use HTTPS/TLS for remote connections
-4. **Firewall**: Configure firewall rules to limit access
+### Authentication Security
+- **Strong Passwords**: Use strong RPC passwords
+- **API Keys**: Rotate API keys regularly
+- **IP Whitelisting**: Restrict access by IP address
 
-### Best Practices
+### Input Validation
+- **Sanitization**: Validate all API inputs
+- **Rate Limiting**: Implement rate limiting
+- **DDoS Protection**: Protect against DDoS attacks
 
-1. **Rate Limiting**: Implement rate limiting to prevent abuse
-2. **Input Validation**: Validate all API inputs
-3. **Error Handling**: Don't expose sensitive information in error messages
-4. **Logging**: Log API access for security monitoring
+## Performance Optimization
 
-## API Versions
+### Caching
+- **Block Data**: Cache frequently accessed block data
+- **Transaction Data**: Cache transaction information
+- **Address Data**: Cache address balances and history
 
-### Version 1.0 (Current)
+### Connection Pooling
+- **Database**: Use connection pooling for database access
+- **Network**: Reuse network connections
+- **RPC**: Maintain persistent RPC connections
 
-- Core blockchain methods
-- Wallet functionality
-- Network information
-- Transaction processing
+### Compression
+- **Response Compression**: Enable gzip compression
+- **WebSocket**: Use compression for WebSocket messages
+- **Data Transfer**: Optimize data transfer sizes
 
-### Future Versions
+## Versioning
 
-- Smart contract support
-- Enhanced privacy features
-- Improved performance APIs
-- Additional utility methods
+### API Versioning
+API versions are indicated in the URL:
+- **v1**: `/api/v1/`
+- **v2**: `/api/v2/`
+
+### Backward Compatibility
+- **Minor Versions**: Maintain backward compatibility
+- **Major Versions**: Breaking changes in major versions
+- **Deprecation**: Deprecate features with advance notice
 
 ## Troubleshooting
 
 ### Common Issues
 
-1. **Connection Refused**
+#### Connection Refused
+```
+curl: (7) Failed to connect to 127.0.0.1 port 18081: Connection refused
+```
+**Solution**: Ensure the DarkGhost node is running and listening on the correct port.
 
-   - Check if the node is running
-   - Verify RPC port configuration
-   - Check firewall settings
+#### Authentication Required
+```json
+{
+  "error": {
+    "code": -1,
+    "message": "Unauthorized"
+  }
+}
+```
+**Solution**: Provide valid authentication credentials.
 
-2. **Authentication Failed**
+#### Rate Limit Exceeded
+```
+429 Too Many Requests
+```
+**Solution**: Reduce request frequency or implement exponential backoff.
 
-   - Verify RPC credentials
-   - Check configuration file
-   - Ensure proper permissions
+### Debugging
+Enable debug logging:
+```bash
+./darkghostd --log-level debug
+```
 
-3. **Method Not Found**
-   - Verify API method name
-   - Check node version compatibility
-   - Review documentation
+## Resources
 
-### Debugging Tips
+### Documentation
+- [JSON-RPC Specification](https://www.jsonrpc.org/specification)
+- [RESTful API Design](https://restfulapi.net/)
+- [WebSocket Protocol](https://tools.ietf.org/html/rfc6455)
 
-1. **Enable Debug Logging**
+### Tools
+- [Postman](https://www.postman.com/) - API testing
+- [curl](https://curl.se/) - Command-line HTTP client
+- [WebSocket Client](https://www.websocket.org/echo.html) - WebSocket testing
 
-   ```ini
-   # darkghost.conf
-   log-level=4
-   ```
+### Libraries
+- [json-rpc](https://github.com/json-rpc) - JSON-RPC libraries
+- [axios](https://github.com/axios/axios) - Promise-based HTTP client
+- [ws](https://github.com/websockets/ws) - WebSocket library
 
-2. **Test with curl**
+## Last Updated
 
-   ```bash
-   curl -u user:pass -H "Content-Type: application/json" \
-     -d '{"jsonrpc":"2.0","id":"0","method":"get_info"}' \
-     http://localhost:31314/json_rpc
-   ```
+September 2, 2025
 
-3. **Check Node Status**
-   ```bash
-   ./darkghost-cli status
-   ```
-
-## Support
-
-For API-related questions and support:
-
-- **Documentation**: https://docs.darkghost.network/api
-- **GitHub Issues**: https://github.com/darkghost-network/darkghost-core/issues
-- **Discord**: discord.gg/darkghost
-- **Email**: api-support@darkghost.network
-
-The DarkGhost API is designed to be intuitive and powerful, enabling developers to build applications that interact with the DarkGhost network while maintaining the privacy and security that are core to the project's mission.
+---

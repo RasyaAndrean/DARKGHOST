@@ -11,6 +11,7 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -O2")
 set(SOURCES
     src/main.cpp
     src/core/blockchain.cpp
+    src/core/genesis.h
     src/consensus/randomx_v2.cpp
     src/privacy/ringct.cpp
     src/privacy/bulletproofs.cpp
@@ -21,6 +22,7 @@ set(SOURCES
 set(TEST_SOURCES
     src/tests/blockchain_test.cpp
     src/core/blockchain.cpp
+    src/core/genesis.h
     src/consensus/randomx_v2.cpp
     src/privacy/ringct.cpp
     src/privacy/bulletproofs.cpp
@@ -31,6 +33,7 @@ set(TEST_SOURCES
 set(BENCHMARK_SOURCES
     benchmark.cpp
     src/core/blockchain.cpp
+    src/core/genesis.h
     src/consensus/randomx_v2.cpp
     src/privacy/ringct.cpp
     src/privacy/bulletproofs.cpp

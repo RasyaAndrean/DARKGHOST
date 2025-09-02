@@ -1,345 +1,408 @@
 # DarkGhost Wallet Guide
 
+This document provides a comprehensive guide to using DarkGhost wallets, including CLI wallet, GUI wallet, and hardware wallet integration.
+
 ## Overview
 
-DarkGhost wallets provide secure storage and management of DG coins with full privacy features including RingCT, Stealth Addresses, and Bulletproofs.
+DarkGhost offers multiple wallet options to suit different user needs:
+- **CLI Wallet**: Command-line interface for advanced users
+- **GUI Wallet**: Graphical interface for general users
+- **Mobile Wallet**: Mobile applications for on-the-go access
+- **Hardware Wallet**: Integration with Ledger and Trezor devices
 
-## Wallet Types
-
-### 1. CLI Wallet
-
-- **Platform**: All operating systems
-- **Features**: Full node, maximum privacy
-- **Technical Level**: Advanced users
-- **Resource Usage**: High (full blockchain)
-
-### 2. GUI Wallet
-
-- **Platform**: Windows, Linux, macOS
-- **Features**: User-friendly interface, integrated node
-- **Technical Level**: Intermediate users
-- **Resource Usage**: Medium
-
-### 3. Mobile Wallet
-
-- **Platform**: Android, iOS
-- **Features**: Lightweight, on-the-go access
-- **Technical Level**: Beginner users
-- **Resource Usage**: Low
-
-### 4. Hardware Wallet
-
-- **Platform**: Ledger, Trezor (planned)
-- **Features**: Cold storage, maximum security
-- **Technical Level**: All users
-- **Resource Usage**: None on device
+All wallets implement DarkGhost's privacy features including RingCT, Bulletproofs, and Stealth Addresses.
 
 ## CLI Wallet
 
-### Installation
+### Getting Started
+The CLI wallet is included with the DarkGhost node software. See [CLI.md](CLI.md) for detailed CLI usage.
 
-Windows:
+#### Installation
+Follow the [DEVELOPMENT_SETUP.md](DEVELOPMENT_SETUP.md) guide to install the DarkGhost software.
 
-```cmd
-build.bat
-```
-
-Linux/macOS:
-
+#### Starting the Wallet
 ```bash
-make
+# Start CLI wallet
+darkghost_wallet
+
+# Start with specific wallet file
+darkghost_wallet --wallet-file my_wallet --password my_password
+
+# Generate new wallet
+darkghost_wallet --generate-new-wallet new_wallet --password my_password
 ```
 
-### Running the Wallet
+### Wallet Commands
+Once the wallet is running, use these commands:
 
+#### Basic Commands
+- `help`: Display available commands
+- `address`: Show wallet address
+- `balance`: Show wallet balance
+- `exit`: Exit the wallet
+
+#### Transaction Commands
+- `send`: Send DarkGhost coins
+- `receive`: Generate stealth address for receiving
+- `history`: Show transaction history
+- `export_outputs`: Export outputs for cold wallet signing
+
+#### Advanced Commands
+- `refresh`: Refresh wallet from blockchain
+- `transfer`: Send transaction with advanced options
+- `sweep_all`: Send all funds to an address
+- `sign_transfer`: Sign transaction in cold wallet
+
+### Wallet Security
+
+#### Password Protection
+Always use a strong password:
 ```bash
-./build/darkghost_wallet
+# When generating new wallet
+darkghost_wallet --generate-new-wallet my_wallet --password "STRONG_PASSWORD_123!"
 ```
 
-### Commands
+#### Seed Phrase
+The wallet generates a 25-word seed phrase for backup:
+- **Storage**: Store securely offline
+- **Encryption**: Encrypt before digital storage
+- **Multiple Copies**: Keep multiple secure copies
+- **Never Share**: Never share with anyone
 
-| Command   | Description                |
-| --------- | -------------------------- |
-| `help`    | Show available commands    |
-| `address` | Display wallet address     |
-| `balance` | Show wallet balance        |
-| `send`    | Send DG to another address |
-| `receive` | Generate stealth address   |
-| `exit`    | Close the wallet           |
-
-### Key Features
-
-1. **BIP-39 Seed Phrase**
-
-   - 12 or 24 word recovery phrase
-   - Industry standard for wallet recovery
-   - Secure backup method
-
-2. **Stealth Addresses**
-
-   - Automatic generation for each transaction
-   - One-time addresses prevent linking
-   - Recipient scanning with view key
-
-3. **Ring Signatures**
-   - Default ring size of 11 (10 decoys)
-   - Unlinkable transactions
-   - Protection against blockchain analysis
+#### File Security
+Protect wallet files:
+- **Permissions**: Restrict file permissions
+- **Encryption**: Use encrypted storage
+- **Backups**: Regular backups to secure locations
+- **Cold Storage**: Use cold storage for large amounts
 
 ## GUI Wallet
 
-### Features
-
-- **User Interface**: Intuitive design
-- **Transaction History**: Visual transaction list
-- **Address Book**: Save frequently used addresses
-- **QR Codes**: Easy address sharing
-- **Multi-language**: International support
+### Overview
+The GUI wallet provides a user-friendly interface with:
+- **Visual Transaction History**: Graphical transaction display
+- **Address Book**: Store frequently used addresses
+- **QR Code Support**: QR codes for easy address sharing
+- **Multi-language Support**: Support for multiple languages
 
 ### Installation
+The GUI wallet will be available as:
+- **Windows**: Installer package
+- **macOS**: DMG package
+- **Linux**: AppImage or package manager
 
-1. Download from official website
-2. Run installer
-3. Follow setup wizard
-4. Create or restore wallet
+#### System Requirements
+- **Windows**: Windows 10 or later
+- **macOS**: macOS 10.14 or later
+- **Linux**: Ubuntu 18.04 or compatible distribution
+- **Resources**: 2GB RAM, 100MB disk space
 
-### Security Features
+### Features
 
-- **Encryption**: AES-256 wallet encryption
-- **Screen Lock**: Automatic lock after inactivity
-- **File Backup**: Encrypted wallet backups
-- **Password Manager**: Secure password storage
+#### Wallet Management
+- **Create Wallet**: Generate new wallets
+- **Restore Wallet**: Restore from seed phrase
+- **Import Wallet**: Import from file
+- **Export Wallet**: Export wallet data
+
+#### Transaction Management
+- **Send Funds**: Send DG to addresses
+- **Receive Funds**: Generate stealth addresses
+- **Transaction History**: View transaction history
+- **Address Book**: Manage address contacts
+
+#### Security Features
+- **Password Protection**: Password-protected wallets
+- **Two-Factor Authentication**: Optional 2FA
+- **Biometric Authentication**: Fingerprint/Face ID support
+- **Hardware Wallet**: Integration with Ledger/Trezor
+
+#### Settings
+- **Network Settings**: Configure network connections
+- **Display Settings**: Customize interface
+- **Security Settings**: Configure security options
+- **Backup Settings**: Configure backup options
 
 ## Mobile Wallet
 
+### Overview
+The mobile wallet provides privacy on-the-go with:
+- **Android**: Google Play Store
+- **iOS**: Apple App Store
+- **Tor Integration**: Built-in Tor support
+- **Push Notifications**: Transaction notifications
+
 ### Features
 
-- **Lightweight**: Minimal storage requirements
-- **QR Scanner**: Scan payment QR codes
-- **Push Notifications**: Transaction alerts
+#### Core Features
+- **Wallet Creation**: Create new mobile wallets
+- **Wallet Restore**: Restore from seed phrase
+- **Send/Receive**: Send and receive DG
+- **Transaction History**: View transaction history
+
+#### Privacy Features
+- **Tor Integration**: Built-in Tor network support
+- **Stealth Mode**: Hide wallet activity
+- **Remote Node**: Connect to remote nodes
+- **Local Node**: Run local node on device
+
+#### Security Features
 - **Biometric Authentication**: Fingerprint/Face ID
-- **Offline Transactions**: Create transactions offline
+- **PIN Protection**: PIN code protection
+- **Device Encryption**: Device-level encryption
+- **Remote Wipe**: Remote wallet wipe capability
 
-### Security
+### Installation
 
-- **Device Encryption**: Hardware-level security
-- **App Sandboxing**: Isolated from other applications
-- **Remote Wipe**: Securely delete wallet remotely
-- **Backup Sync**: Encrypted cloud backups
+#### Android
+1. Open Google Play Store
+2. Search for "DarkGhost Wallet"
+3. Download and install
+4. Follow setup wizard
 
-## Wallet Security Best Practices
+#### iOS
+1. Open App Store
+2. Search for "DarkGhost Wallet"
+3. Download and install
+4. Follow setup wizard
 
-### 1. Backup and Recovery
+### Security Best Practices
+- **App Store Only**: Download only from official app stores
+- **Updates**: Keep app updated
+- **Permissions**: Review app permissions
+- **Backup**: Regularly backup seed phrase
 
-- **Seed Phrase**: Write down and store securely
-- **Multiple Copies**: Store in different locations
-- **Physical Security**: Use fireproof safe or safety deposit box
-- **Never Digital**: Don't store seed phrase on connected devices
+## Hardware Wallet Integration
 
-### 2. Password Security
+### Supported Devices
+- **Ledger**: Nano S, Nano S Plus, Nano X
+- **Trezor**: Model T, Model One
+- **Future Support**: Additional hardware wallets
 
-- **Strong Passwords**: Use 12+ character complex passwords
-- **Unique Passwords**: Don't reuse passwords from other services
-- **Password Manager**: Use reputable password manager
-- **Two-Factor Auth**: Enable 2FA where available
+### Setup Process
 
-### 3. Device Security
+#### Ledger Setup
+1. Install Ledger Live
+2. Install DarkGhost app on Ledger device
+3. Create or restore wallet in DarkGhost wallet
+4. Connect Ledger device
+5. Follow wallet prompts
 
-- **Operating System**: Keep updated with latest security patches
-- **Antivirus**: Use reputable antivirus software
-- **Network Security**: Avoid public Wi-Fi for transactions
-- **Physical Security**: Protect devices from theft
+#### Trezor Setup
+1. Install Trezor Suite
+2. Create or restore wallet in DarkGhost wallet
+3. Connect Trezor device
+4. Follow wallet prompts
 
-### 4. Transaction Security
+### Security Benefits
+- **Air-Gapped Storage**: Private keys stored offline
+- **Tamper Resistance**: Hardware-level security
+- **Recovery**: Seed phrase recovery
+- **Verification**: Transaction verification on device
 
-- **Verify Addresses**: Double-check recipient addresses
-- **Small Test**: Send small amount first for new addresses
-- **Network Confirmations**: Wait for sufficient confirmations
-- **Privacy Settings**: Use maximum privacy settings
+### Usage Tips
+- **Firmware Updates**: Keep device firmware updated
+- **Physical Security**: Secure physical device
+- **Backup**: Secure seed phrase backup
+- **Testing**: Test with small amounts first
+
+## Wallet Types Comparison
+
+| Feature | CLI Wallet | GUI Wallet | Mobile Wallet | Hardware Wallet |
+|---------|------------|------------|---------------|-----------------|
+| Platform | All | Windows/macOS/Linux | Android/iOS | Hardware Device |
+| Difficulty | High | Medium | Low | Medium |
+| Features | Full | Full | Limited | Full |
+| Security | High | High | Medium | Very High |
+| Privacy | Full | Full | Full | Full |
+| Portability | Low | Medium | High | High |
+| Backup | Manual | Manual | Manual | Seed Phrase |
+| Cost | Free | Free | Free | $50-200 |
 
 ## Privacy Features
 
-### RingCT (Ring Confidential Transactions)
-
-- **Decoy Selection**: Automatically selects 10 decoy outputs
-- **Amount Hiding**: Transaction amounts encrypted with Pedersen commitments
-- **Signature Mixing**: Real output mixed with decoys in ring signature
+### Ring Confidential Transactions (RingCT)
+All wallets implement RingCT:
+- **Default Ring Size**: 11 (10 decoys + 1 real)
+- **Amount Hiding**: Transaction amounts hidden
+- **Unlinkability**: Transactions cannot be linked
+- **Untraceability**: Transaction origins hidden
 
 ### Stealth Addresses
-
-- **One-Time Keys**: Each transaction uses unique address
-- **View Keys**: Optional scanning for received transactions
-- **Spend Keys**: Required to spend received funds
+One-time addresses for each transaction:
+- **Automatic Generation**: Generated automatically
+- **Recipient Privacy**: Recipient address hidden
+- **Sender Privacy**: Sender cannot link transactions
+- **Scanning**: Recipients scan blockchain with view key
 
 ### Bulletproofs
+Efficient range proofs:
+- **Size Reduction**: 80% transaction size reduction
+- **Verification**: Fast verification
+- **Aggregation**: Multiple proofs can be combined
+- **Security**: Mathematical security proofs
 
-- **Transaction Compression**: Reduces transaction size by ~80%
-- **Faster Verification**: Optimized range proofs
-- **Lower Fees**: Reduced transaction costs
+## Backup and Recovery
 
-## Wallet Management
+### Seed Phrase
+25-word seed phrase for wallet recovery:
+- **Generation**: Generated during wallet creation
+- **Storage**: Store securely offline
+- **Encryption**: Encrypt before digital storage
+- **Testing**: Test recovery process
 
-### Creating a New Wallet
+### Wallet Files
+Encrypted wallet files:
+- **Location**: Store in secure location
+- **Encryption**: AES-256 encryption
+- **Backups**: Regular backups
+- **Sync**: Sync across devices securely
 
-1. **CLI Wallet**:
+### Recovery Process
+Steps to recover wallet:
+1. **Obtain Seed Phrase**: Retrieve 25-word seed phrase
+2. **Install Wallet**: Install DarkGhost wallet
+3. **Restore Wallet**: Use restore function
+4. **Enter Seed**: Enter seed phrase
+5. **Set Password**: Set new password
+6. **Sync Wallet**: Wait for blockchain sync
 
-   ```bash
-   ./darkghost_wallet
-   # Follow prompts to generate new wallet
-   ```
+## Security Best Practices
 
-2. **GUI Wallet**:
+### General Security
+- **Strong Passwords**: Use strong, unique passwords
+- **Two-Factor Authentication**: Enable 2FA when available
+- **Software Updates**: Keep wallets updated
+- **Phishing Protection**: Verify addresses carefully
 
-   - Launch application
-   - Select "Create New Wallet"
-   - Follow setup wizard
+### Physical Security
+- **Device Security**: Secure devices physically
+- **Network Security**: Use secure networks
+- **Backup Security**: Secure backup storage
+- **Access Control**: Limit access to wallets
 
-3. **Mobile Wallet**:
-   - Download from app store
-   - Select "Create New Wallet"
-   - Backup seed phrase
-
-### Restoring a Wallet
-
-1. **CLI Wallet**:
-
-   ```bash
-   ./darkghost_wallet
-   # Select restore option and enter seed phrase
-   ```
-
-2. **GUI Wallet**:
-
-   - Launch application
-   - Select "Restore Wallet"
-   - Enter seed phrase
-
-3. **Mobile Wallet**:
-   - Launch application
-   - Select "Restore Wallet"
-   - Enter seed phrase
-
-### Sending Transactions
-
-1. **Get Recipient Address**: Obtain stealth address from recipient
-2. **Enter Amount**: Specify DG amount to send
-3. **Review Details**: Verify transaction details
-4. **Confirm**: Authorize with password/biometrics
-5. **Broadcast**: Transaction sent to network
-
-### Receiving Transactions
-
-1. **Generate Address**: Create new stealth address
-2. **Share Address**: Provide address to sender
-3. **Wait for Confirmation**: Monitor for incoming transactions
-4. **Scan**: Use view key to scan for transactions (if enabled)
+### Operational Security
+- **Address Verification**: Verify addresses before sending
+- **Transaction Review**: Review transactions carefully
+- **Amount Verification**: Verify transaction amounts
+- **Fee Awareness**: Understand transaction fees
 
 ## Troubleshooting
 
 ### Common Issues
 
-1. **Wallet Not Syncing**
+#### Wallet Won't Start
+**Symptoms**: Wallet fails to start or crashes
+**Solutions**:
+- Check system requirements
+- Update wallet software
+- Check file permissions
+- Reinstall wallet
 
-   - Check internet connection
-   - Verify node connectivity
-   - Restart wallet application
+#### Balance Issues
+**Symptoms**: Incorrect balance display
+**Solutions**:
+- Refresh wallet from blockchain
+- Check transaction history
+- Verify wallet synchronization
+- Contact support
 
-2. **Incorrect Balance**
+#### Transaction Failures
+**Symptoms**: Transactions fail to send
+**Solutions**:
+- Check network connectivity
+- Verify wallet balance
+- Check transaction fees
+- Review transaction details
 
-   - Wait for full synchronization
-   - Check for unconfirmed transactions
-   - Rescan blockchain if necessary
+#### Sync Issues
+**Symptoms**: Wallet won't synchronize
+**Solutions**:
+- Check node connectivity
+- Verify blockchain data
+- Restart wallet
+- Reimport blockchain
 
-3. **Failed Transactions**
+### Error Messages
 
-   - Verify recipient address
-   - Check available balance
-   - Ensure sufficient fee
+#### "Insufficient Funds"
+**Cause**: Not enough available funds
+**Solution**: Check balance and unlocked funds
 
-4. **Backup Issues**
-   - Verify seed phrase accuracy
-   - Test restore procedure
-   - Create new backup if needed
+#### "Invalid Address"
+**Cause**: Malformed or incorrect address
+**Solution**: Verify address format and checksum
 
-### Support Resources
+#### "Transaction Rejected"
+**Cause**: Network or node rejection
+**Solution**: Check fees and network status
 
-- **Documentation**: https://docs.darkghost.network
-- **Community Forum**: https://forum.darkghost.network
-- **Discord**: discord.gg/darkghost
-- **Telegram**: t.me/darkghostcoin
-- **Reddit**: r/darkghost
+#### "Wallet Corrupted"
+**Cause**: Damaged wallet file
+**Solution**: Restore from seed phrase or backup
 
 ## Advanced Features
 
-### View-Only Wallets
+### Cold Wallet Signing
+Secure transaction signing:
+1. **Create Transaction**: Create unsigned transaction on offline wallet
+2. **Export File**: Export transaction file
+3. **Transfer File**: Securely transfer to online device
+4. **Sign Transaction**: Sign with online wallet
+5. **Broadcast**: Broadcast signed transaction
 
-Create wallets with view keys only for:
+### Multi-signature Wallets
+Shared wallet control:
+- **Setup**: Configure multi-signature wallet
+- **Keys**: Distribute keys to participants
+- **Signing**: Require multiple signatures
+- **Security**: Enhanced security through shared control
 
-- **Auditing**: Monitor transactions without spending ability
-- **Accounting**: Track incoming payments
-- **Security**: Monitor without exposing spend keys
+### View-only Wallets
+Monitor wallets without spending:
+- **View Key**: Use view key only
+- **Monitoring**: Monitor incoming transactions
+- **No Spending**: Cannot spend funds
+- **Privacy**: Maintain recipient privacy
 
-### Multi-Signature Transactions
+## Integration and Development
 
-Planned feature for:
+### API Integration
+Integrate wallets with applications:
+- **JSON-RPC**: JSON-RPC API for wallet operations
+- **REST API**: RESTful API for web applications
+- **WebSocket**: Real-time event notifications
+- **Library Bindings**: Native libraries for languages
 
-- **Shared Accounts**: Multiple parties required for spending
-- **Business Use**: Corporate treasury management
-- **Enhanced Security**: Additional authorization layers
+### Custom Wallet Development
+Develop custom wallet applications:
+- **SDK**: DarkGhost SDK for wallet development
+- **Documentation**: Comprehensive API documentation
+- **Examples**: Sample wallet implementations
+- **Support**: Developer community support
 
-### Cold Storage
+## Resources
 
-Secure long-term storage:
+### Documentation
+- [CLI.md](CLI.md) - Command-line interface
+- [API.md](API.md) - API documentation
+- [SECURITY.md](SECURITY.md) - Security guidelines
+- [PRIVACY_FEATURES.md](PRIVACY_FEATURES.md) - Privacy features
 
-- **Air-Gapped**: Completely offline storage
-- **Hardware Wallets**: Dedicated secure devices
-- **Paper Wallets**: Physical backup of keys
+### Tools
+- [Wallet Generator](https://wallet.darkghost.network) - Online wallet generator
+- [Block Explorer](https://explorer.darkghost.network) - Blockchain explorer
+- [Seed Validator](https://seed.darkghost.network) - Seed phrase validator
+- [Address Checker](https://address.darkghost.network) - Address validation
 
-## Legal and Compliance
+### Community
+- **Discord**: [DarkGhost Wallet](https://discord.gg/darkghost)
+- **Reddit**: [r/darkghost](https://reddit.com/r/darkghost)
+- **Telegram**: [DarkGhost Users](https://t.me/darkghostusers)
+- **Forum**: [DarkGhost Community](https://community.darkghost.network)
 
-### Regulatory Considerations
+## Last Updated
 
-- **Tax Reporting**: Maintain transaction records
-- **AML/KYC**: Comply with local regulations
-- **Licensing**: Obtain required business licenses
-- **Consumer Protection**: Follow financial service regulations
+September 2, 2025
 
-### Privacy vs. Compliance
-
-- **Balancing Act**: Privacy features vs. regulatory requirements
-- **Jurisdiction**: Laws vary by country and region
-- **Professional Advice**: Consult legal and tax professionals
-
-## Future Developments
-
-### Planned Features
-
-1. **Hardware Wallet Support**
-
-   - Ledger integration
-   - Trezor compatibility
-   - Coldcard support
-
-2. **Light Wallet Protocol**
-
-   - Reduced resource requirements
-   - Faster synchronization
-   - Mobile optimization
-
-3. **Multi-Currency Support**
-
-   - Cross-chain atomic swaps
-   - Bridge protocols
-   - DeFi integration
-
-4. **Enhanced Privacy**
-   - zk-SNARKs integration
-   - Improved decoy selection
-   - Advanced transaction types
-
-### Community Involvement
-
-- **Open Source**: Contribute to wallet development
-- **Beta Testing**: Test new features
-- **Translation**: Localize for different languages
-- **Documentation**: Improve user guides
+---

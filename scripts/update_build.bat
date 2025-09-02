@@ -1,34 +1,47 @@
 @echo off
-echo Updating Build Directory...
+echo Updating DarkGhost Build...
 echo =========================
 
-REM Check if build directory exists
-if not exist "..\build" (
-    echo Creating build directory...
-    mkdir "..\build"
+REM Check if we're in the right directory
+if not exist "CMakeLists.txt" (
+    echo Error: Please run this script from the DarkGhost root directory
+    pause
+    exit /b 1
 )
 
-REM Copy source files to build directory
-echo Copying source files to build directory...
-xcopy "..\src" "..\build\src\" /E /Y /Q
+REM Pull latest changes
+echo Pulling latest changes...
+git pull
 
-REM Copy build scripts to build directory
-echo Copying build scripts...
-copy "..\scripts\build.bat" "..\build\" /Y
-copy "..\scripts\run_node.bat" "..\build\" /Y
-copy "..\scripts\run_wallet.bat" "..\build\" /Y
-copy "..\scripts\run_tests.bat" "..\build\" /Y
+REM Clean build directory
+echo Cleaning build directory...
+if exist "build" (
+    rmdir /s /q "build"
+)
+mkdir "build"
 
-REM Copy build configuration files
-echo Copying build configuration...
-copy "..\Makefile" "..\build\" /Y
-copy "..\CMakeLists.txt" "..\build\" /Y
+REM Build the project
+echo Building project...
+cd build
+cmake .. -G "MinGW Makefiles"
+mingw32-make
+
+if exist "darkghostd.exe" (
+    echo.
+    echo Update successful!
+    echo Executables updated:
+    echo   - darkghostd.exe (Main node)
+    echo   - darkghost_wallet.exe (CLI wallet)
+    echo   - darkghost_test.exe (Test suite)
+    echo   - darkghost_benchmark.exe (Benchmark tool)
+) else (
+    echo.
+    echo Update failed!
+    echo Check the error messages above.
+)
+
+cd ..
 
 echo.
-echo Build directory updated successfully!
-echo.
-echo To build DarkGhost:
-echo   cd ..\build
-echo   build.bat
-
+echo Build update complete!
 pause

@@ -1,6 +1,7 @@
 #ifndef DARKGHOST_BLOCKCHAIN_H
 #define DARKGHOST_BLOCKCHAIN_H
 
+#include "genesis.h"
 #include <cstdint>
 #include <vector>
 
@@ -37,8 +38,7 @@ private:
   std::vector<Block> chain;
   std::vector<UTXO> utxo_set;
   uint64_t total_supply;
-  const uint64_t MAX_SUPPLY =
-      10000000000000000; // 100 million DG in atomic units
+  const uint64_t MAX_SUPPLY = Genesis::MAX_SUPPLY;
 };
 
 #endif // DARKGHOST_BLOCKCHAIN_H

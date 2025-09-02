@@ -1,120 +1,74 @@
 #!/bin/bash
 
-# DarkGhost Release Script
-# This script creates a new release of DarkGhost
+echo "DarkGhost Release Script"
+echo "======================"
 
-VERSION=$1
-RELEASE_DIR="releases"
-
-if [ -z "$VERSION" ]; then
-    echo "Usage: $0 <version>"
-    echo "Example: $0 1.0.0"
+# Check if we're in the right directory
+if [ ! -f "CMakeLists.txt" ]; then
+    echo "Error: Please run this script from the DarkGhost root directory"
     exit 1
 fi
 
-echo "Creating DarkGhost release v$VERSION"
+# Get version from darkghost.h
+VERSION=$(grep "DARKGHOST_VERSION" src/darkghost.h | awk '{print $3}' | sed 's/"//g')
+
+echo "Creating release for DarkGhost v$VERSION..."
 
 # Create release directory
-mkdir -p $RELEASE_DIR/v$VERSION
+RELEASE_DIR="release-v$VERSION"
+if [ -d "$RELEASE_DIR" ]; then
+    echo "Removing existing release directory..."
+    rm -rf "$RELEASE_DIR"
+fi
+mkdir "$RELEASE_DIR"
 
-# Build the project
-echo "Building DarkGhost..."
-make clean
-make all
-make benchmark
-
-# Create platform-specific packages
-echo "Creating platform packages..."
-
-# Linux package
-echo "Creating Linux package..."
-tar -czf $RELEASE_DIR/v$VERSION/darkghost-linux-x64-v$VERSION.tar.gz \
-    build/darkghostd \
-    build/darkghost_wallet \
-    build/darkghost_test \
-    build/benchmark \
-    darkghost.conf.example \
-    README.md \
-    DOCS.md \
-    GETTING_STARTED.md \
-    CHANGELOG.md
-
-# Create checksums
-echo "Creating checksums..."
-cd $RELEASE_DIR/v$VERSION
-sha256sum darkghost-linux-x64-v$VERSION.tar.gz > darkghost-linux-x64-v$VERSION.tar.gz.sha256
-
-# Create release notes
-echo "Creating release notes..."
-cat > release-notes-v$VERSION.md << EOF
-# DarkGhost v$VERSION Release Notes
-
-## Highlights
-
-- [Feature] Core blockchain implementation
-- [Feature] RandomX v2 consensus algorithm
-- [Feature] RingCT privacy features
-- [Feature] Stealth address implementation
-- [Feature] Bulletproofs range proofs
-- [Feature] CLI wallet functionality
-
-## Changelog
-
-### Added
-- Initial project structure
-- Core blockchain with UTXO model
-- Privacy features (RingCT, Stealth Addresses, Bulletproofs)
-- Wallet implementation
-- Build system
-- Documentation
-- Test suite
-
-### Changed
-- None (Initial release)
-
-### Fixed
-- None (Initial release)
-
-## Installation
-
-### Linux
-\`\`\`bash
-tar -xzf darkghost-linux-x64-v$VERSION.tar.gz
+# Build project
+echo "Building project..."
+mkdir -p build
 cd build
-./darkghostd
-\`\`\`
+cmake ..
+make
 
-## System Requirements
+if [ ! -f "darkghostd" ]; then
+    echo "Error: Build failed!"
+    cd ..
+    exit 1
+fi
 
-- Linux x64 system
-- 4GB RAM minimum
-- 50GB free disk space
-- Internet connection
+echo "Build successful!"
 
-## Verification
+# Copy executables to release directory
+echo "Copying executables..."
+cp "darkghostd" "../$RELEASE_DIR/"
+cp "darkghost_wallet" "../$RELEASE_DIR/"
+cp "darkghost_test" "../$RELEASE_DIR/"
+cp "darkghost_benchmark" "../$RELEASE_DIR/"
 
-To verify the integrity of the download, check the SHA256 checksum:
+# Copy documentation
+echo "Copying documentation..."
+mkdir -p "../$RELEASE_DIR/docs"
+cp ../docs/*.md "../$RELEASE_DIR/docs/"
 
-\`\`\`bash
-sha256sum -c darkghost-linux-x64-v$VERSION.tar.gz.sha256
-\`\`\`
+# Copy scripts
+echo "Copying scripts..."
+mkdir -p "../$RELEASE_DIR/scripts"
+cp ../scripts/*.bat "../$RELEASE_DIR/scripts/" 2>/dev/null || true
+cp ../scripts/*.sh "../$RELEASE_DIR/scripts/" 2>/dev/null || true
+cp ../scripts/*.py "../$RELEASE_DIR/scripts/" 2>/dev/null || true
 
-## Documentation
+# Copy configuration files
+echo "Copying configuration files..."
+cp "../darkghost.conf.example" "../$RELEASE_DIR/"
+cp "../pool.conf" "../$RELEASE_DIR/"
+cp "../README.md" "../$RELEASE_DIR/"
+cp "../LICENSE" "../$RELEASE_DIR/"
 
-See the following files for detailed documentation:
-- README.md: Project overview
-- DOCS.md: Technical documentation
-- GETTING_STARTED.md: Installation and usage guide
-- CHANGELOG.md: Version history
+# Create release archive
+echo "Creating release archive..."
+cd ..
+tar -czf "darkghost-v$VERSION-linux.tar.gz" "$RELEASE_DIR"
 
-## Support
-
-For support, visit:
-- Discord: discord.gg/darkghost
-- GitHub: https://github.com/darkghost-network/darkghost-core
-- Website: https://darkghost.network
-
-EOF
-
+echo
 echo "Release v$VERSION created successfully!"
-echo "Files are located in $RELEASE_DIR/v$VERSION"
+echo "Archive: darkghost-v$VERSION-linux.tar.gz"
+echo

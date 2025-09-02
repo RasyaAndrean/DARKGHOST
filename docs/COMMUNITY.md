@@ -1,339 +1,237 @@
 # DarkGhost Community Guidelines
 
-## Welcome to the DarkGhost Community!
+This document outlines the community guidelines for the DarkGhost project.
 
-The DarkGhost community is a diverse group of developers, miners, users, and enthusiasts who share a common interest in privacy-focused cryptocurrency technology. This document outlines our community values, guidelines, and resources to help you participate effectively.
+## Overview
 
-## Community Values
+DarkGhost is a community-driven open-source project that values collaboration, respect, and technical excellence. These guidelines help maintain a positive and productive environment for all participants.
 
-### 1. Privacy and Security
+## Code of Conduct
 
-We prioritize privacy and security for all community members. Respect others' privacy and follow best practices for securing your own digital assets.
+### Respect and Inclusivity
+- Treat all community members with respect and kindness
+- Use inclusive language and be welcoming to all participants
+- Respect different viewpoints and experiences
+- Focus on constructive feedback and technical discussion
 
-### 2. Open Collaboration
+### Professional Conduct
+- Maintain professionalism in all interactions
+- Avoid personal attacks, harassment, or discrimination
+- Keep discussions focused on the technology and project
+- Be patient with newcomers and those learning the technology
 
-We believe in open-source development and collaborative problem-solving. Share knowledge, contribute to discussions, and help others learn.
+### Collaboration
+- Encourage collaboration and knowledge sharing
+- Provide constructive feedback on contributions
+- Acknowledge the contributions of others
+- Help community members grow and learn
 
-### 3. Technical Excellence
+## Communication Channels
 
-We strive for technical excellence in all our endeavors. Base discussions on facts, evidence, and technical merit rather than speculation or personal opinions.
+### Discord
+- **Main Chat**: General discussion and community interaction
+- **Development**: Technical discussions and development coordination
+- **Support**: User support and troubleshooting
+- **Announcements**: Project updates and important announcements
 
-### 4. Inclusivity and Respect
+### Telegram
+- **Dev Channel**: Developer-focused discussions
+- **Community Group**: General community discussions
+- **Announcements**: Important project updates
 
-We welcome participants from all backgrounds and treat everyone with respect. Discrimination, harassment, or hostile behavior will not be tolerated.
+### Reddit
+- **r/darkghost**: Community discussions and news
+- **Technical Discussions**: In-depth technical topics
+- **User Support**: Community-driven support
 
-### 5. Constructive Communication
-
-We encourage constructive communication that advances understanding and solves problems. Focus on ideas rather than attacking individuals.
-
-## Community Guidelines
-
-### Communication Standards
-
-#### Be Respectful
-
-- Treat all community members with courtesy and respect
-- Avoid personal attacks, insults, or inflammatory language
-- Disagree constructively and focus on ideas rather than individuals
-
-#### Be Helpful
-
-- Answer questions when you can
-- Share knowledge and resources
-- Help newcomers get started
-- Provide constructive feedback
-
-#### Be Honest
-
-- Be truthful in your communications
-- Acknowledge limitations in your knowledge
-- Admit when you're wrong
-- Share both successes and failures
-
-#### Be Constructive
-
-- Focus on solutions rather than just problems
-- Provide specific, actionable feedback
-- Support your arguments with evidence
-- Stay on topic in discussions
-
-### Participation Guidelines
-
-#### Contributing Code
-
-- Follow established coding standards
-- Write clear commit messages
-- Include tests for new functionality
-- Document your code appropriately
-- Be responsive to code review feedback
-
-#### Reporting Issues
-
-- Search for existing issues before creating new ones
-- Provide detailed information about problems
-- Include steps to reproduce issues
-- Use appropriate labels and categories
-- Be patient while waiting for responses
-
-#### Making Suggestions
-
-- Explain the problem you're trying to solve
-- Describe your proposed solution
-- Consider alternative approaches
-- Be open to feedback and refinement
-- Focus on benefits to the broader community
-
-#### Community Discussions
-
-- Stay on topic in discussion channels
-- Avoid excessive self-promotion
-- Respect others' viewpoints
-- Keep discussions civil and productive
-- Use appropriate channels for different topics
-
-## Community Resources
-
-### Official Channels
-
-#### GitHub
-
-- **Repository**: github.com/darkghost-network/darkghost-core
+### GitHub
 - **Issues**: Bug reports and feature requests
-- **Pull Requests**: Code contributions
-- **Wiki**: Documentation and guides
+- **Pull Requests**: Code contributions and reviews
+- **Discussions**: Technical discussions and planning
 
-#### Discord
+## Contribution Guidelines
 
-- **Main Server**: discord.gg/darkghost
-- **Channels**:
-  - #general: General discussion
-  - #development: Technical development discussions
-  - #mining: Mining-related discussions
-  - #wallets: Wallet support and development
-  - #trading: Market discussions
-  - #help: User support
-  - #announcements: Official announcements
+### Code Contributions
+1. **Fork the Repository**: Create your own fork of the project
+2. **Create a Branch**: Work on a feature branch
+3. **Follow Standards**: Adhere to coding standards and guidelines
+4. **Write Tests**: Include tests for new functionality
+5. **Submit Pull Request**: Create a pull request with your changes
 
-#### Social Media
+### Documentation Contributions
+1. **Identify Needs**: Look for areas needing documentation
+2. **Follow Style Guide**: Use consistent formatting and style
+3. **Provide Examples**: Include practical examples when possible
+4. **Review Accuracy**: Ensure technical accuracy
+5. **Submit Changes**: Create pull requests for documentation updates
 
-- **Twitter**: @darkghostcoin
-- **Reddit**: r/darkghost
-- **Telegram**: t.me/darkghostcoin
-- **LinkedIn**: DarkGhost Network
+### Bug Reports
+1. **Search Existing Issues**: Check if the bug is already reported
+2. **Provide Details**: Include detailed reproduction steps
+3. **Environment Information**: Specify platform and version
+4. **Expected vs Actual**: Describe expected and actual behavior
+5. **Additional Context**: Include any relevant logs or screenshots
 
-#### Forums
-
-- **Official Forum**: forum.darkghost.network
-- **Topics**: In-depth discussions, proposals, governance
-
-### Educational Resources
-
-#### Documentation
-
-- **Getting Started Guide**: Installation and basic usage
-- **Technical Documentation**: Protocol specifications and implementation details
-- **API Documentation**: Developer resources
-- **FAQ**: Frequently asked questions
-
-#### Tutorials
-
-- **Video Tutorials**: Step-by-step guides
-- **Written Guides**: Detailed instructions
-- **Workshops**: Live training sessions
-- **Webinars**: Expert presentations
-
-#### Research
-
-- **Whitepapers**: Technical research papers
-- **Academic Papers**: Peer-reviewed research
-- **Blog Posts**: Developer insights and updates
-- **Case Studies**: Real-world applications
+### Feature Requests
+1. **Check Roadmap**: See if the feature is already planned
+2. **Provide Use Cases**: Explain why the feature is needed
+3. **Technical Details**: Include technical considerations
+4. **Community Benefit**: Describe how it benefits the community
+5. **Implementation Ideas**: Suggest possible implementation approaches
 
 ## Community Roles
 
-### New Members
+### Core Developers
+- **Responsibilities**: 
+  - Code review and quality assurance
+  - Architecture decisions
+  - Release management
+  - Community leadership
+- **Selection**: Chosen based on technical expertise and contributions
 
-Welcome to the community! As a new member:
+### Contributors
+- **Responsibilities**:
+  - Code and documentation contributions
+  - Testing and bug reporting
+  - Community support
+  - Feature development
+- **Recognition**: Acknowledged in release notes and contributor lists
 
-- Introduce yourself in #introductions
-- Read the documentation and guidelines
-- Ask questions in appropriate channels
-- Participate in discussions
-- Contribute as you're able
+### Community Members
+- **Responsibilities**:
+  - Participate in discussions
+  - Provide feedback
+  - Help other community members
+  - Promote the project
+- **Benefits**: Access to all community resources and support
 
-### Regular Contributors
+## Recognition and Rewards
 
-Regular community members:
+### Contributor Recognition
+- **GitHub Recognition**: Contributor badges and mentions
+- **Release Notes**: Acknowledgment in release announcements
+- **Community Highlights**: Featured contributions in community updates
 
-- Help newcomers and answer questions
-- Participate in discussions constructively
-- Contribute to projects and documentation
-- Report bugs and suggest improvements
-- Follow community guidelines consistently
+### Bug Bounty Program
+- **Security Issues**: Rewards for critical security vulnerabilities
+- **Major Bugs**: Recognition for significant bug fixes
+- **Program Details**: See security documentation for specifics
 
-### Core Contributors
-
-Experienced community members who:
-
-- Make regular code contributions
-- Help maintain documentation
-- Mentor newcomers
-- Participate in governance
-- Lead community initiatives
-
-### Community Leaders
-
-Recognized community members who:
-
-- Guide project direction
-- Make important decisions
-- Represent the project publicly
-- Foster community growth
-- Resolve conflicts constructively
-
-## Community Events
-
-### Regular Events
-
-- **Weekly Development Calls**: Technical discussions
-- **Monthly Community Meetings**: Governance and updates
-- **Office Hours**: Q&A sessions with developers
-- **AMA Sessions**: Ask Me Anything with team members
-
-### Special Events
-
-- **Hackathons**: Coding competitions
-- **Conferences**: In-person and virtual events
-- **Workshops**: Hands-on training sessions
-- **Meetups**: Local community gatherings
-
-### Community Initiatives
-
-- **Bug Bounty Program**: Reward security researchers
-- **Grant Program**: Fund development projects
-- **Translation Efforts**: Localize documentation
-- **Educational Programs**: Teach others about privacy tech
+### Community Awards
+- **Outstanding Contributions**: Annual recognition for top contributors
+- **Community Support**: Awards for exceptional community support
+- **Innovation**: Recognition for innovative contributions
 
 ## Conflict Resolution
 
-### Addressing Issues
-
-1. **Direct Communication**: Try to resolve issues directly with involved parties
-2. **Mediation**: Seek help from neutral community members
-3. **Moderation**: Contact moderators for serious issues
-4. **Escalation**: Involve community leaders for major conflicts
-
-### Reporting Problems
-
-- **Code of Conduct Violations**: Contact conduct@darkghost.network
-- **Security Issues**: Report to security@darkghost.network
-- **Technical Problems**: Create GitHub issues
-- **General Concerns**: Discuss in appropriate channels
+### Reporting Issues
+- **Direct Communication**: Try to resolve issues directly with involved parties
+- **Moderator Contact**: Contact community moderators for assistance
+- **Escalation**: Escalate to core team for serious issues
 
 ### Moderation Process
+1. **Investigation**: Review the situation and gather information
+2. **Discussion**: Engage with involved parties
+3. **Resolution**: Work toward a mutually acceptable solution
+4. **Documentation**: Record the resolution for future reference
 
-1. **Investigation**: Review the situation objectively
-2. **Discussion**: Communicate with involved parties
-3. **Resolution**: Work toward a constructive solution
-4. **Documentation**: Record outcomes for future reference
-5. **Follow-up**: Ensure resolution is effective
+### Enforcement Actions
+- **Warnings**: Verbal or written warnings for minor violations
+- **Temporary Bans**: Short-term restrictions for repeated violations
+- **Permanent Bans**: Permanent removal for severe violations
 
-## Getting Involved
+## Events and Meetups
 
-### Ways to Contribute
+### Virtual Events
+- **Developer Calls**: Regular technical discussions
+- **Community Meetings**: General community gatherings
+- **Workshops**: Educational sessions on specific topics
+- **AMA Sessions**: Ask Me Anything with core team members
 
-1. **Code Development**: Contribute to the core protocol
-2. **Documentation**: Improve guides and manuals
-3. **Testing**: Help test new features and releases
-4. **Translation**: Localize content for different languages
-5. **Community Support**: Help other users and newcomers
-6. **Education**: Create tutorials and learning materials
-7. **Research**: Conduct technical research and analysis
-8. **Outreach**: Promote the project and its values
+### In-Person Events
+- **Conferences**: Speaking opportunities at crypto conferences
+- **Meetups**: Local community gatherings
+- **Hackathons**: Development competitions and challenges
+- **Workshops**: Hands-on technical training sessions
 
-### Starting Points
-
-1. **Read the Documentation**: Understand the project
-2. **Join the Community**: Participate in discussions
-3. **Find Your Interests**: Identify areas where you can contribute
-4. **Start Small**: Begin with manageable contributions
-5. **Ask for Help**: Don't hesitate to seek guidance
-6. **Be Patient**: Building relationships takes time
-
-### Recognition and Rewards
-
-- **Contributor Badges**: Recognition for significant contributions
-- **Grant Program**: Funding for development projects
-- **Conference Invitations**: Opportunities to present work
-- **Merchandise**: Community-branded items
-- **Leadership Roles**: Opportunities for greater responsibility
-
-## Community Governance
-
-### Decision Making
-
-- **Consensus**: Strive for community consensus on major decisions
-- **Voting**: Use voting when consensus cannot be reached
-- **RFC Process**: Formal process for major changes
-- **Working Groups**: Specialized teams for specific areas
-
-### Leadership Structure
-
-- **Maintainers**: Technical leadership
-- **Community Managers**: Community engagement
-- **Governance Committee**: Policy decisions
-- **Advisory Board**: Strategic guidance
-
-### Transparency
-
-- **Public Records**: Document decisions and rationale
-- **Regular Updates**: Communicate project status
-- **Financial Reporting**: Share funding and spending
-- **Roadmap**: Publish development plans
-
-## Code of Conduct Enforcement
-
-### Violation Response
-
-1. **Warning**: First-time minor violations may receive warnings
-2. **Temporary Ban**: Repeated or serious violations may result in temporary bans
-3. **Permanent Ban**: Severe or persistent violations may result in permanent bans
-4. **Appeal Process**: Provide process for appealing decisions
-
-### Reporting Violations
-
-- **Private Reporting**: Contact conduct@darkghost.network
-- **Anonymous Reporting**: Use anonymous reporting tools when available
-- **Public Reporting**: For non-personal issues, use appropriate public channels
-- **Emergency Reporting**: For immediate threats, contact platform administrators
-
-## Resources for Help
-
-### Technical Support
-
-- **Documentation**: Check official documentation first
-- **Community Forums**: Search existing discussions
-- **Help Channels**: Ask in #help or similar channels
-- **Professional Support**: Contact service providers
+## Education and Outreach
 
 ### Learning Resources
+- **Documentation**: Comprehensive technical documentation
+- **Tutorials**: Step-by-step guides for various topics
+- **Video Content**: Educational videos and presentations
+- **Blog Posts**: Technical articles and project updates
 
-- **Tutorials**: Step-by-step guides
-- **Courses**: Structured learning programs
-- **Books**: In-depth reference materials
-- **Videos**: Visual learning content
+### Mentorship Program
+- **Pair Programming**: Collaborative coding sessions
+- **Code Reviews**: Detailed feedback on contributions
+- **Career Guidance**: Advice on crypto development careers
+- **Skill Development**: Help with technical skill improvement
 
-### Professional Services
+## Governance
 
-- **Consulting**: Expert guidance and advice
-- **Development**: Custom development services
-- **Auditing**: Security and code reviews
-- **Training**: Professional training programs
+### Decision Making
+- **Consensus**: Community consensus for major decisions
+- **Core Team**: Core team makes technical architecture decisions
+- **RFC Process**: Formal process for significant changes
+- **Community Votes**: Community input on important issues
 
-## Conclusion
+### Transparency
+- **Meeting Notes**: Public notes from core team meetings
+- **Roadmap Updates**: Regular roadmap updates and planning
+- **Financial Reports**: Transparency about project funding
+- **Development Progress**: Regular progress updates
 
-The DarkGhost community is built on shared values of privacy, security, collaboration, and technical excellence. By following these guidelines and participating constructively, you can help make our community stronger and more welcoming for everyone.
+## Feedback and Improvement
 
-Thank you for being part of the DarkGhost community. Together, we're building a better, more private future for cryptocurrency.
+### Community Surveys
+- **Regular Surveys**: Periodic feedback collection
+- **Satisfaction Metrics**: Community satisfaction tracking
+- **Improvement Suggestions**: Ideas for community improvement
+- **Priority Setting**: Community input on priorities
 
-For questions about these guidelines or community participation, contact community@darkghost.network.
+### Continuous Improvement
+- **Process Reviews**: Regular review of community processes
+- **Guideline Updates**: Updates to community guidelines
+- **Tool Evaluation**: Evaluation of community tools
+- **Best Practices**: Adoption of community best practices
+
+## Resources
+
+### Getting Started
+- [README.md](../README.md) - Project overview
+- [DEVELOPMENT_SETUP.md](DEVELOPMENT_SETUP.md) - Development environment setup
+- [CONTRIBUTING.md](CONTRIBUTING.md) - Contribution guidelines
+- [STYLE_GUIDE.md](STYLE_GUIDE.md) - Coding standards
+
+### Communication
+- Discord: [Invite Link](https://discord.gg/darkghost)
+- Telegram: [Dev Channel](https://t.me/darkghostdev)
+- Reddit: [r/darkghost](https://reddit.com/r/darkghost)
+- Twitter: [@DarkGhostCoin](https://twitter.com/DarkGhostCoin)
+
+### Technical Documentation
+- [ARCHITECTURE.md](ARCHITECTURE.md) - System architecture
+- [ROADMAP_2025_2028.md](ROADMAP_2025_2028.md) - Development roadmap
+- [API.md](API.md) - API documentation
+- [CLI.md](CLI.md) - Command-line interface guide
+
+## Contact Information
+
+### Core Team
+- **Project Lead**: Rasya Andrean (rasyaandrean@outlook.co.id)
+- **Technical Lead**: [To be determined]
+- **Community Manager**: [To be determined]
+
+### Moderators
+- [List of community moderators]
+
+### Support
+- **Email**: support@darkghost.network
+- **Community Channels**: Discord, Telegram, Reddit
+
+## Last Updated
+
+September 2, 2025
+
+---

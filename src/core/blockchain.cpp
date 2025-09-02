@@ -23,9 +23,9 @@ void Blockchain::initialize() {
       "0000000000000000000000000000000000000000000000000000000000000000";
   genesis.merkle_root =
       "0000000000000000000000000000000000000000000000000000000000000000";
-  genesis.timestamp = 1756742400; // September 1, 2025
-  genesis.nonce = 123456;
-  genesis.reward = 5000000000; // 50 DG in atomic units
+  genesis.timestamp = Genesis::GENESIS_TIMESTAMP;
+  genesis.nonce = Genesis::GENESIS_NONCE;
+  genesis.reward = Genesis::INITIAL_BLOCK_REWARD;
 
   chain.push_back(genesis);
   total_supply += genesis.reward;

@@ -4,6 +4,8 @@
 
 # DarkGhost [DG] - Hybrid Privacy Cryptocurrency
 
+[![Build Status](https://github.com/RasyaAndrean/DARKGHOST/workflows/Build%20and%20Test/badge.svg)](https://github.com/RasyaAndrean/DARKGHOST/actions)
+
 ## Overview
 
 DarkGhost is a revolutionary hybrid cryptocurrency that combines the best features of Bitcoin and Monero. It implements Bitcoin's UTXO model for scalability and efficiency while incorporating Monero's advanced privacy features to ensure complete transaction confidentiality.
@@ -136,4 +138,12 @@ Join our community to stay updated on developments:
 
 ## Roadmap
 
-See our [ROADMAP.md](docs/ROADMAP.md) for future development plans.
+See our detailed [2025-2028 Roadmap](docs/ROADMAP_2025_2028.md) for future development plans.
+
+## Development Status
+
+- ✅ Phase 0 - Foundation (In Progress)
+- 🔜 Phase 1 - Testnet & Tooling (Planned Q1-2026)
+- 🔜 Phase 2 - Mainnet & Initial Ecosystem (Planned Q2-2026)
+- 🔜 Phase 3 - Scaling & Governance (Planned Q3-2026-Q2-2027)
+- 🔜 Phase 4 - Mass Adoption & Long-term (Planned Q3-2027-2028+)

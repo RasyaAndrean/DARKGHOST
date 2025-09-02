@@ -1,710 +1,521 @@
-# DarkGhost Command Line Interface (CLI) Guide
+# DarkGhost Command-Line Interface (CLI)
+
+This document describes the DarkGhost command-line interface, including node commands, wallet commands, and utility functions.
 
 ## Overview
 
-The DarkGhost CLI provides powerful command-line tools for interacting with the DarkGhost network, managing wallets, and performing various blockchain operations. This guide covers the available CLI tools and their usage.
+DarkGhost provides two main command-line interfaces:
+- **darkghostd**: The main node daemon
+- **darkghost_wallet**: The command-line wallet
 
-## Available CLI Tools
+Both tools support extensive command-line options for configuration and operation.
 
-### 1. DarkGhost Daemon (`darkghostd`)
-
-The main DarkGhost node daemon that maintains the blockchain, validates transactions, and participates in the network consensus.
-
-### 2. DarkGhost Wallet CLI (`darkghost-wallet-cli`)
-
-A command-line wallet interface for managing DarkGhost funds, creating transactions, and interacting with the blockchain.
-
-### 3. DarkGhost RPC Client (`darkghost-cli`)
-
-A lightweight RPC client for sending commands to a running DarkGhost daemon.
-
-### 4. Key Generator (`darkghost-gen-key`)
-
-A utility for generating cryptographic keys and wallet addresses.
-
-## DarkGhost Daemon (`darkghostd`)
+## DarkGhost Node (darkghostd)
 
 ### Basic Usage
-
 ```bash
-# Start the daemon with default settings
-./darkghostd
-
-# Start with custom configuration
-./darkghostd --config-file /path/to/darkghost.conf
-
-# Start in testnet mode
-./darkghostd --testnet
-
-# Start with specific data directory
-./darkghostd --data-dir /path/to/blockchain/data
+darkghostd [options]
 ```
 
 ### Common Options
 
-| Option                    | Description                  | Example                        |
-| ------------------------- | ---------------------------- | ------------------------------ |
-| `--config-file`           | Specify configuration file   | `--config-file darkghost.conf` |
-| `--data-dir`              | Specify data directory       | `--data-dir /blockchain/data`  |
-| `--log-file`              | Specify log file             | `--log-file darkghost.log`     |
-| `--log-level`             | Set log level (0-4)          | `--log-level 3`                |
-| `--testnet`               | Run on testnet               | `--testnet`                    |
-| `--rpc-bind-ip`           | RPC bind IP                  | `--rpc-bind-ip 127.0.0.1`      |
-| `--rpc-bind-port`         | RPC bind port                | `--rpc-bind-port 31314`        |
-| `--restricted-rpc`        | Restrict RPC commands        | `--restricted-rpc`             |
-| `--confirm-external-bind` | Confirm external RPC binding | `--confirm-external-bind`      |
-| `--detach`                | Run as daemon in background  | `--detach`                     |
+#### Network Options
+- `--mainnet`: Run on mainnet (default)
+- `--testnet`: Run on testnet
+- `--devnet`: Run on devnet
+- `--data-dir <directory>`: Specify data directory
+- `--config-file <file>`: Specify configuration file
+
+#### RPC Options
+- `--rpc-bind-ip <ip>`: IP to bind RPC server (default: 127.0.0.1)
+- `--rpc-bind-port <port>`: Port to bind RPC server (default: 18081)
+- `--rpc-login <username:password>`: RPC authentication
+- `--confirm-external-bind`: Confirm external RPC binding
+
+#### P2P Options
+- `--p2p-bind-ip <ip>`: IP to bind P2P server (default: 0.0.0.0)
+- `--p2p-bind-port <port>`: Port to bind P2P server (default: 18080)
+- `--add-peer <ip:port>`: Add peer to connect to
+- `--seed-node <ip:port>`: Connect to seed node
+
+#### Logging Options
+- `--log-file <file>`: Specify log file
+- `--log-level <level>`: Set log level (trace, debug, info, warn, error)
+- `--log-format <format>`: Set log format (default, json)
+- `--max-log-file-size <size>`: Maximum log file size
+
+#### Performance Options
+- `--max-concurrency <n>`: Maximum concurrency
+- `--block-sync-size <n>`: Block sync size
+- `--block-download-timeout <seconds>`: Block download timeout
+
+### Node Commands
+
+#### Starting the Node
+```bash
+# Start node with default settings
+darkghostd
+
+# Start node with custom data directory
+darkghostd --data-dir /path/to/data
+
+# Start node on testnet
+darkghostd --testnet
+
+# Start node with RPC authentication
+darkghostd --rpc-login user:password
+```
+
+#### Stopping the Node
+```bash
+# Graceful shutdown
+kill -TERM $(pidof darkghostd)
+
+# Force shutdown (not recommended)
+kill -KILL $(pidof darkghostd)
+```
+
+#### Node Status
+```bash
+# Check node status via RPC
+curl -X POST http://127.0.0.1:18081/json_rpc \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "jsonrpc": "2.0",
+    "id": "0",
+    "method": "get_info"
+  }'
+```
 
 ### Configuration File
-
-Create a `darkghost.conf` file to store persistent settings:
+The node can be configured through a configuration file (`darkghost.conf`):
 
 ```ini
 # Network settings
+mainnet=1
 testnet=0
-data-dir=/home/user/.darkghost
- log-file=/home/user/.darkghost/darkghost.log
-log-level=3
+devnet=0
+
+# Data directory
+data-dir=/path/to/data
 
 # RPC settings
 rpc-bind-ip=127.0.0.1
-rpc-bind-port=31314
-rpc-login=username:password
-confirm-external-bind=0
-restricted-rpc=0
+rpc-bind-port=18081
+rpc-login=user:password
 
 # P2P settings
 p2p-bind-ip=0.0.0.0
-p2p-bind-port=31313
-out-peers=8
-in-peers=16
+p2p-bind-port=18080
+
+# Logging settings
+log-file=/path/to/darkghost.log
+log-level=info
 
 # Performance settings
-block-sync-size=100
-db-sync-mode=fast
+max-concurrency=4
 ```
 
-### Daemon Management
-
-#### Starting the Daemon
-
-```bash
-# Foreground mode (recommended for initial setup)
-./darkghostd --config-file darkghost.conf
-
-# Background mode
-./darkghostd --config-file darkghost.conf --detach
-```
-
-#### Stopping the Daemon
-
-```bash
-# Graceful shutdown
-./darkghost-cli exit
-
-# Force kill (not recommended)
-killall darkghostd
-```
-
-#### Checking Status
-
-```bash
-# Get node information
-./darkghost-cli get_info
-
-# Check synchronization status
-./darkghost-cli sync_info
-
-# View connections
-./darkghost-cli get_connections
-```
-
-## DarkGhost Wallet CLI (`darkghost-wallet-cli`)
+## DarkGhost Wallet (darkghost_wallet)
 
 ### Basic Usage
-
 ```bash
-# Start wallet with interactive mode
-./darkghost-wallet-cli
-
-# Start with specific wallet file
-./darkghost-wallet-cli --wallet-file my_wallet
-
-# Start with testnet wallet
-./darkghost-wallet-cli --testnet --wallet-file test_wallet
-
-# Start with specific daemon address
-./darkghost-wallet-cli --daemon-address localhost:31313
+darkghost_wallet [options]
 ```
 
-### Wallet Creation and Management
+### Common Options
 
-#### Creating a New Wallet
+#### Wallet Options
+- `--wallet-file <file>`: Use wallet file
+- `--generate-new-wallet <file>`: Generate new wallet
+- `--daemon-address <ip:port>`: Use daemon instance at <ip:port>
+- `--password <password>`: Wallet password
 
-```bash
-./darkghost-wallet-cli --generate-new-wallet my_wallet
+#### Security Options
+- `--restore-deterministic-wallet`: Restore deterministic wallet
+- `--restore-height <height>`: Restore from block height
+- `--electrum-seed <seed>`: Specify Electrum seed for wallet recovery
 
-# You will be prompted for:
-# - Password (encrypts wallet file)
-# - Language for seed phrase (English, Spanish, etc.)
-```
-
-#### Opening an Existing Wallet
-
-```bash
-./darkghost-wallet-cli --wallet-file my_wallet
-
-# You will be prompted for the wallet password
-```
-
-#### Restoring from Seed
-
-```bash
-./darkghost-wallet-cli --restore-deterministic-wallet
-
-# You will be prompted for:
-# - Wallet name
-# - Password
-# - Seed phrase (25 words)
-# - Restore height (optional, for faster sync)
-```
+#### RPC Options
+- `--daemon-host <host>`: Daemon host
+- `--daemon-port <port>`: Daemon port
+- `--trusted-daemon`: Enable commands which rely on a trusted daemon
 
 ### Wallet Commands
 
-#### Basic Information
-
-```
-# Show wallet address
-address
-
-# Show balance
-balance
-
-# Show blockchain height
-height
-
-# Show wallet status
-status
-```
-
-#### Transaction Management
-
-```
-# Send DG to an address
-transfer <address> <amount>
-
-# Example:
-transfer DG1YourRecipientAddressHere 10.5
-
-# Send to multiple recipients
-transfer <address1> <amount1> <address2> <amount2>
-
-# Sweep all funds to an address
-sweep_all <address>
-
-# Sweep specific outputs
-sweep_single <key_image> <address>
-
-# Show transaction history
-show_transfers
-
-# Show incoming transfers
-incoming_transfers
-
-# Export wallet outputs
-export_outputs outputs.bin
-
-# Import wallet outputs
-import_outputs outputs.bin
-```
-
-#### Advanced Wallet Features
-
-```
-# Generate a new integrated address with payment ID
-integrated_address
-
-# Generate a new subaddress
-address new
-
-# Show all subaddresses
-address all
-
-# Label a subaddress
-address label <index> <label>
-
-# Set transaction priority
-set priority 2  # 1=low, 2=medium, 3=high, 4=unimportant
-
-# Set ring size
-set ring_size 11
-
-# Enable/disable auto-refresh
-set auto-refresh 1
-
-# Refresh wallet manually
-refresh
-
-# Save wallet
-save
-
-# Change wallet password
-password
-```
-
-#### View-Only Wallet
-
-```
-# Create view-only wallet from existing wallet
-export_key_images key_images
-
-# In view-only wallet:
-import_key_images key_images
-```
-
-### Wallet Security
-
-#### Backup Commands
-
-```
-# Show seed phrase (25 words)
-seed
-
-# Show view key
-viewkey
-
-# Show spend key (DANGER: Never share this!)
-spendkey
-
-# Backup wallet file
-save
-```
-
-#### Security Settings
-
-```
-# Enable wallet encryption
-password
-
-# Set auto-save interval
-set auto-save 1
-
-# Enable/disable mining
-start_mining 4  # 4 threads
-stop_mining
-```
-
-## DarkGhost RPC Client (`darkghost-cli`)
-
-### Basic Usage
-
+#### Starting the Wallet
 ```bash
-# Get node information
-./darkghost-cli get_info
+# Start wallet with existing file
+darkghost_wallet --wallet-file my_wallet --password my_password
 
-# Get blockchain height
-./darkghost-cli get_height
+# Generate new wallet
+darkghost_wallet --generate-new-wallet new_wallet --password my_password
 
-# Get block hash
-./darkghost-cli get_block_hash 12345
+# Restore from seed
+darkghost_wallet --restore-deterministic-wallet --electrum-seed "sequence of words"
+```
 
-# Get block details
-./darkghost-cli get_block 12345
+#### Interactive Wallet Commands
+Once the wallet is running, you can use the following commands:
 
-# Get transaction details
-./darkghost-cli get_transactions tx_hash1 tx_hash2
+##### help
+Display available commands:
+```
+DarkGhost> help
+Available commands:
+  help     - Show this help message
+  address  - Show wallet address
+  balance  - Show wallet balance
+  send     - Send DarkGhost coins
+  receive  - Receive DarkGhost coins
+  exit     - Exit the wallet
+```
 
-# Start mining
-./darkghost-cli start_mining DG1YourMiningAddressHere 4
+##### address
+Display wallet address:
+```
+DarkGhost> address
+Wallet Address: dg1abc123...
+Stealth Address: dg1def456...
+```
+
+##### balance
+Show wallet balance:
+```
+DarkGhost> balance
+Balance: 1000.00 DG
+Unlocked Balance: 500.00 DG
+Atomic Units: 100000000000
+```
+
+##### send
+Send DarkGhost coins:
+```
+DarkGhost> send
+Recipient address: dg1recipient...
+Amount (DG): 50.0
+Transaction sent successfully!
+Transaction Hash: abc123...
+Transaction Key: def456...
+Fee: 0.0001 DG
+```
+
+##### receive
+Generate stealth address for receiving:
+```
+DarkGhost> receive
+Generating new stealth address for receiving...
+Share this address to receive DarkGhost coins:
+dg1newstealthaddress...
+```
+
+##### exit
+Exit the wallet:
+```
+DarkGhost> exit
+Exiting DarkGhost wallet...
+```
+
+### Wallet Configuration
+The wallet can be configured through command-line options or configuration files:
+
+```ini
+# Daemon settings
+daemon-address=127.0.0.1:18081
+
+# Wallet settings
+wallet-file=my_wallet
+password=my_password
+
+# Security settings
+trusted-daemon=1
+```
+
+## Utility Commands
+
+### Key Generation
+Generate new key pairs:
+```bash
+# Generate new wallet keys
+darkghost_wallet --generate-new-wallet temp_wallet --password temp_password
+```
+
+### Blockchain Utilities
+Utilities for blockchain analysis:
+```bash
+# Export blockchain to file
+darkghostd --export-blockchain --data-dir /path/to/data
+
+# Import blockchain from file
+darkghostd --import-blockchain --data-dir /path/to/data
+```
+
+### Transaction Utilities
+Utilities for transaction analysis:
+```bash
+# Decode raw transaction
+darkghost_wallet --decode-raw-tx <hex_transaction>
+
+# Verify transaction signature
+darkghost_wallet --verify-tx <hex_transaction>
+```
+
+## Advanced Usage
+
+### Mining
+Start mining with the node:
+```bash
+# Start mining with 4 threads
+darkghostd --start-mining --mining-threads 4 --mining-address dg1miner...
 
 # Stop mining
-./darkghost-cli stop_mining
-
-# Save blockchain
-./darkghost-cli save
-
-# Stop daemon
-./darkghost-cli exit
+darkghostd --stop-mining
 ```
 
-### Advanced RPC Commands
+### Network Analysis
+Analyze network connectivity:
+```bash
+# Show peer list
+darkghostd --print-pl
+
+# Show blockchain status
+darkghostd --print-bc
+```
+
+### Debugging
+Enable debugging features:
+```bash
+# Enable debug logging
+darkghostd --log-level debug
+
+# Enable trace logging
+darkghostd --log-level trace
+
+# Log to file
+darkghostd --log-file /path/to/debug.log
+```
+
+## Scripting and Automation
+
+### Batch Scripts
+Create batch scripts for automated operations:
+
+#### Windows Batch Script
+```batch
+@echo off
+echo Starting DarkGhost Node...
+darkghostd --data-dir C:\darkghost\data --log-file C:\darkghost\logs\node.log
+```
+
+#### Linux Shell Script
+```bash
+#!/bin/bash
+echo "Starting DarkGhost Node..."
+darkghostd --data-dir /home/user/darkghost/data --log-file /home/user/darkghost/logs/node.log
+```
+
+### Cron Jobs
+Schedule regular operations with cron:
 
 ```bash
-# Get network connections
-./darkghost-cli get_connections
+# Daily backup at 2 AM
+0 2 * * * /path/to/backup_script.sh
 
-# Get peer list
-./darkghost-cli get_peer_list
-
-# Ban a peer
-./darkghost-cli ban 192.168.1.100
-
-# Unban a peer
-./darkghost-cli unban 192.168.1.100
-
-# Flush transaction pool
-./darkghost-cli flush_txpool
-
-# Get mining status
-./darkghost-cli mining_status
-
-# Get transaction pool backlog
-./darkghost-cli get_txpool_backlog
+# Hourly status check
+0 * * * * /path/to/status_check.sh
 ```
 
-## Key Generator (`darkghost-gen-key`)
-
-### Basic Usage
-
-```bash
-# Generate a new key pair
-./darkghost-gen-key
-
-# Generate a key pair with specific parameters
-./darkghost-gen-key --language English --restore-height 0
-
-# Validate an address
-./darkghost-gen-key --address DG1YourAddressHere
-```
-
-## Common CLI Workflows
-
-### 1. Setting Up a New Node
-
-```bash
-# 1. Create configuration file
-cat > darkghost.conf << EOF
-data-dir=/home/user/.darkghost
-log-file=/home/user/.darkghost/darkghost.log
-log-level=3
-rpc-bind-ip=127.0.0.1
-rpc-bind-port=31314
-rpc-login=darkghost:your_secure_password
-EOF
-
-# 2. Create data directory
-mkdir -p /home/user/.darkghost
-
-# 3. Start the daemon
-./darkghostd --config-file darkghost.conf
-
-# 4. Monitor sync progress (in another terminal)
-./darkghost-cli get_info
-```
-
-### 2. Creating and Using a Wallet
-
-```bash
-# 1. Create new wallet
-./darkghost-wallet-cli --generate-new-wallet my_wallet
-
-# 2. Note the seed phrase and store it securely
-# 3. Set a strong password
-# 4. Note the wallet address
-
-# 5. In wallet CLI, check balance
-balance
-
-# 6. Send funds
-transfer DG1RecipientAddressHere 10.5
-
-# 7. Check transaction status
-show_transfers
-```
-
-### 3. Mining Setup
-
-```bash
-# 1. Start daemon with mining enabled
-./darkghostd --start-mining DG1YourMiningAddressHere --mining-threads 4
-
-# 2. Or start mining via RPC
-./darkghost-cli start_mining DG1YourMiningAddressHere 4
-
-# 3. Check mining status
-./darkghost-cli mining_status
-
-# 4. Monitor hashrate
-./darkghost-cli get_info
-```
-
-### 4. Backup and Recovery
-
-```bash
-# 1. In wallet CLI, export seed phrase
-seed
-
-# 2. Store seed phrase securely (offline storage)
-
-# 3. Backup wallet file
-save
-
-# 4. Copy wallet file to secure location
-cp my_wallet /secure/backup/location/
-
-# 5. To restore:
-./darkghost-wallet-cli --restore-deterministic-wallet
-```
-
-## Environment Variables
-
-### Supported Variables
-
-```bash
-# Set RPC credentials
-export DARKGHOST_RPC_USER=username
-export DARKGHOST_RPC_PASSWORD=password
-
-# Set daemon address
-export DARKGHOST_DAEMON_ADDRESS=localhost:31313
-
-# Set wallet file
-export DARKGHOST_WALLET_FILE=my_wallet
-
-# Set log level
-export DARKGHOST_LOG_LEVEL=3
-```
-
-## Scripting Examples
-
-### Bash Script for Node Monitoring
+### JSON-RPC Automation
+Automate operations through JSON-RPC:
 
 ```bash
 #!/bin/bash
-
-# monitor_node.sh
-while true; do
-    echo "=== DarkGhost Node Status ==="
-    ./darkghost-cli get_info | grep -E "height|difficulty|status"
-    echo "Connections: $(./darkghost-cli get_connections | grep -c peer)"
-    echo "Last check: $(date)"
-    echo "============================"
-    sleep 60
-done
-```
-
-### Python Script for Wallet Balance
-
-```python
-#!/usr/bin/env python3
-
-import subprocess
-import json
-
-def get_wallet_balance():
-    try:
-        result = subprocess.run(
-            ['./darkghost-cli', 'get_balance'],
-            capture_output=True,
-            text=True,
-            check=True
-        )
-        data = json.loads(result.stdout)
-        balance = data['result']['balance'] / 100000000  # Convert from atomic units
-        return balance
-    except subprocess.CalledProcessError as e:
-        print(f"Error: {e}")
-        return None
-
-if __name__ == "__main__":
-    balance = get_wallet_balance()
-    if balance is not None:
-        print(f"Wallet balance: {balance:.8f} DG")
-```
-
-## Troubleshooting
-
-### Common Issues and Solutions
-
-#### 1. Daemon Won't Start
-
-```bash
-# Check logs
-tail -f ~/.darkghost/darkghost.log
-
-# Verify configuration
-./darkghostd --help
-
-# Check ports
-netstat -tlnp | grep 31313
-```
-
-#### 2. Wallet Connection Issues
-
-```bash
-# Check daemon status
-./darkghost-cli get_info
-
-# Verify daemon is running
-ps aux | grep darkghostd
-
-# Check RPC settings
-./darkghost-wallet-cli --daemon-address correct_address:31313
-```
-
-#### 3. Sync Problems
-
-```bash
-# Check sync status
-./darkghost-cli sync_info
-
-# Add more peers
-./darkghost-cli add_peer seed.darkghost.network:31313
-
-# Check firewall
-sudo ufw status
-```
-
-#### 4. Transaction Issues
-
-```bash
-# Check transaction pool
-./darkghost-cli get_transaction_pool
-
-# Verify funds
-./darkghost-wallet-cli balance
-
-# Check ring size
-./darkghost-wallet-cli set ring_size 11
-```
-
-### Debugging Options
-
-#### Verbose Logging
-
-```bash
-# Start with maximum verbosity
-./darkghostd --log-level 4
-
-# Log to file with timestamp
-./darkghostd --log-file darkghost.log --log-level 3
-```
-
-#### Network Debugging
-
-```bash
-# Show detailed connection info
-./darkghost-cli get_connections
-
-# Ban problematic peers
-./darkghost-cli ban problematic_peer_ip
-
-# Reset peer list
-./darkghost-cli flush_peer_list
-```
-
-## Performance Tuning
-
-### Daemon Optimization
-
-```bash
-# Increase database sync mode
-./darkghostd --db-sync-mode fast
-
-# Adjust block sync size
-./darkghostd --block-sync-size 200
-
-# Limit connections
-./darkghostd --out-peers 10 --in-peers 20
-```
-
-### Wallet Optimization
-
-```bash
-# Increase refresh rate
-./darkghost-wallet-cli set refresh-rate 5
-
-# Adjust auto-save interval
-./darkghost-wallet-cli set auto-save 1
-
-# Use subaddresses for better performance
-./darkghost-wallet-cli address new
+# Get node info
+curl -s -X POST http://127.0.0.1:18081/json_rpc \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "jsonrpc": "2.0",
+    "id": "0",
+    "method": "get_info"
+  }' | jq '.result.height'
 ```
 
 ## Security Best Practices
 
-### Daemon Security
-
-1. **RPC Authentication**: Always use strong RPC credentials
-2. **Network Binding**: Bind RPC to localhost only when possible
-3. **Firewall**: Configure firewall to restrict access
-4. **Updates**: Keep daemon software updated
+### Node Security
+- **Firewall**: Restrict RPC access to trusted IPs
+- **Authentication**: Use strong RPC passwords
+- **Updates**: Keep node software updated
+- **Backups**: Regularly backup wallet files
 
 ### Wallet Security
+- **Passwords**: Use strong wallet passwords
+- **Storage**: Store wallet files securely
+- **Backups**: Backup wallet files and seed phrases
+- **Offline**: Use cold storage for large amounts
 
-1. **Strong Passwords**: Use complex wallet passwords
-2. **Seed Backup**: Store seed phrases securely offline
-3. **File Permissions**: Restrict wallet file permissions
-4. **View Keys**: Use view-only wallets for monitoring
+### Network Security
+- **Tor**: Use Tor for enhanced privacy
+- **VPN**: Use VPN for network anonymity
+- **Updates**: Keep system software updated
+- **Monitoring**: Monitor for suspicious activity
 
-### Example Secure Configuration
+## Troubleshooting
 
-```ini
-# Secure darkghost.conf
-data-dir=/home/user/.darkghost
-log-file=/home/user/.darkghost/darkghost.log
-log-level=1  # Reduce log verbosity
+### Common Issues
 
-# RPC Security
-rpc-bind-ip=127.0.0.1  # Localhost only
-rpc-bind-port=31314
-rpc-login=strong_user:very_secure_password
-rpc-restricted-bind-port=31315  # For public access
-
-# Network Security
-out-peers=8
-in-peers=0  # Disable incoming connections if not needed
+#### Node Won't Start
 ```
+Error: Failed to bind to port 18080
+```
+**Solution**: Check if another instance is running or change the port.
 
-## Advanced Features
+#### Wallet Connection Failed
+```
+Error: Couldn't connect to daemon
+```
+**Solution**: Ensure the node is running and accessible.
 
-### Restricted RPC Mode
+#### Insufficient Funds
+```
+Error: Not enough money
+```
+**Solution**: Check wallet balance and ensure funds are unlocked.
 
+#### Sync Issues
+```
+Error: Blockchain not synced
+```
+**Solution**: Wait for blockchain to sync or check network connectivity.
+
+### Log Analysis
+Check logs for detailed error information:
 ```bash
-# Start daemon with restricted RPC
-./darkghostd --restricted-rpc
+# View recent log entries
+tail -f /path/to/darkghost.log
 
-# Or in configuration:
-restricted-rpc=1
-rpc-restricted-bind-port=31315
+# Search for errors
+grep -i error /path/to/darkghost.log
+
+# View last 100 lines
+tail -100 /path/to/darkghost.log
 ```
 
-### Blockchain Pruning
-
+### Performance Monitoring
+Monitor node performance:
 ```bash
-# Start daemon with pruned blockchain
-./darkghostd --prune-blockchain
+# Check system resources
+top -p $(pidof darkghostd)
 
-# Check pruning status
-./darkghost-cli get_info | grep pruning
+# Check disk usage
+df -h /path/to/data
+
+# Check network usage
+iftop -i eth0
 ```
 
-### Bootstrap Node
+## Environment Variables
 
+### Node Variables
+- `DARKGHOST_DATA_DIR`: Default data directory
+- `DARKGHOST_CONFIG_FILE`: Default configuration file
+- `DARKGHOST_LOG_LEVEL`: Default log level
+
+### Wallet Variables
+- `DARKGHOST_WALLET_FILE`: Default wallet file
+- `DARKGHOST_DAEMON_ADDRESS`: Default daemon address
+- `DARKGHOST_WALLET_PASSWORD`: Default wallet password
+
+## Docker Usage
+
+### Running Node in Docker
 ```bash
-# Start as bootstrap node
-./darkghostd --bootstrap-daemon-address seed.darkghost.network:31313
+# Run node in Docker
+docker run -d \
+  --name darkghost-node \
+  -p 18080:18080 \
+  -p 18081:18081 \
+  -v /path/to/data:/data \
+  darkghost/darkghostd \
+  --data-dir /data
 ```
 
-## Support and Resources
+### Running Wallet in Docker
+```bash
+# Run wallet in Docker
+docker run -it \
+  --name darkghost-wallet \
+  -v /path/to/wallets:/wallets \
+  darkghost/darkghost_wallet \
+  --wallet-file /wallets/my_wallet \
+  --password my_password
+```
+
+## Integration Examples
+
+### Python Integration
+```python
+import subprocess
+import json
+
+def get_node_info():
+    result = subprocess.run([
+        'curl', '-s', '-X', 'POST',
+        'http://127.0.0.1:18081/json_rpc',
+        '-H', 'Content-Type: application/json',
+        '-d', json.dumps({
+            "jsonrpc": "2.0",
+            "id": "0",
+            "method": "get_info"
+        })
+    ], capture_output=True, text=True)
+    
+    return json.loads(result.stdout)
+
+info = get_node_info()
+print(f"Block height: {info['result']['height']}")
+```
+
+### Bash Integration
+```bash
+#!/bin/bash
+
+# Function to get wallet balance
+get_balance() {
+    curl -s -X POST http://127.0.0.1:18081/json_rpc \
+      -H 'Content-Type: application/json' \
+      -d '{
+        "jsonrpc": "2.0",
+        "id": "0",
+        "method": "get_balance"
+      }' | jq -r '.result.balance'
+}
+
+balance=$(get_balance)
+echo "Wallet balance: $balance atomic units"
+```
+
+## Resources
 
 ### Documentation
+- [API.md](API.md) - API documentation
+- [WALLET.md](WALLET.md) - Wallet documentation
+- [MINING.md](MINING.md) - Mining documentation
+- [SECURITY.md](SECURITY.md) - Security guidelines
 
-- **Official Docs**: https://docs.darkghost.network
-- **API Reference**: API.md in this repository
-- **JSON-RPC Guide**: Detailed RPC method documentation
+### Tools
+- [curl](https://curl.se/) - Command-line HTTP client
+- [jq](https://stedolan.github.io/jq/) - JSON processor
+- [screen](https://www.gnu.org/software/screen/) - Terminal multiplexer
+- [tmux](https://github.com/tmux/tmux) - Terminal multiplexer
 
-### Community Support
+### References
+- [Bitcoin CLI](https://en.bitcoin.it/wiki/Original_Bitcoin_client/API_calls_list)
+- [Monero CLI](https://wwww.getmonero.org/resources/developer-guides/wallet-rpc.html)
+- [Command-Line Interface](https://en.wikipedia.org/wiki/Command-line_interface)
 
-- **Discord**: discord.gg/darkghost
-- **Reddit**: r/darkghost
-- **Telegram**: t.me/darkghostcoin
-- **GitHub Issues**: Report bugs and request features
+## Last Updated
 
-### Professional Support
+September 2, 2025
 
-- **Enterprise Solutions**: enterprise@darkghost.network
-- **Security Audits**: security@darkghost.network
-- **Consulting**: consulting@darkghost.network
-
-The DarkGhost CLI tools provide powerful and flexible ways to interact with the DarkGhost network. Whether you're running a full node, managing wallets, or building applications, these tools offer the functionality you need with the privacy and security that DarkGhost is known for.
+---

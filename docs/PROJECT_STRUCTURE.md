@@ -8,27 +8,34 @@ This document describes the directory structure and organization of the DarkGhos
 
 ```
 DarkGhost/
-├── src/                    # Source code
-├── build/                  # Build output (created during compilation)
-├── docs/                   # Documentation files
-├── wallets/                # Wallet storage (created during runtime)
-├── logs/                   # Log files (created during runtime)
+├── .github/
+│   └── workflows/         # GitHub Actions workflows
+├── assets/                # Project assets (logo, etc.)
+├── build/                 # Build output (created during compilation)
+├── docs/                  # Documentation files
+├── logs/                  # Log files (created during runtime)
+├── scripts/               # Scripts and build tools
+├── src/                   # Source code
+├── wallets/               # Wallet storage (created during runtime)
 ├── .gitignore             # Git ignore file
 ├── ARCHITECTURE.md        # System architecture documentation
 ├── CMakeLists.txt         # CMake build configuration
 ├── darkghost.conf         # Main configuration file
 ├── darkghost.conf.example # Example configuration file
 ├── DOCS.md                # Technical documentation
+├── Dockerfile             # Containerization configuration
+├── docker-compose.yml     # Docker Compose configuration
 ├── Makefile               # Make build configuration
 ├── MINING.md              # Mining guide
 ├── pool.conf              # Example mining pool configuration
 ├── PROJECT_STRUCTURE.md   # This file
+├── PROJECT_STATUS.md      # Current project status
 ├── README.md              # Project overview
 ├── ROADMAP.md             # Development roadmap
+├── ROADMAP_2025_2028.md   # Detailed 2025-2028 roadmap
 ├── run_node.bat           # Node execution script (Windows)
-├── build.bat              # Build script (Windows)
 ├── WALLET.md              # Wallet guide
-└── LICENSE                # License file (to be added)
+└── LICENSE                # License file
 ```
 
 ## Source Code Structure
@@ -39,7 +46,8 @@ DarkGhost/
 src/
 ├── core/
 │   ├── blockchain.h       # Blockchain implementation
-│   └── blockchain.cpp
+│   ├── blockchain.cpp
+│   └── genesis.h          # Genesis block and network parameters
 ├── consensus/
 │   ├── randomx_v2.h       # RandomX v2 consensus algorithm
 │   └── randomx_v2.cpp
@@ -68,6 +76,7 @@ Located in `src/core/`, this component implements the UTXO-based blockchain mode
 
 - `blockchain.h`: Defines the Blockchain class, UTXO structure, and Block structure
 - `blockchain.cpp`: Implements blockchain initialization, block addition, and UTXO management
+- `genesis.h`: Defines genesis block parameters and network constants
 
 **Features:**
 
@@ -153,10 +162,41 @@ The `CMakeLists.txt` provides cross-platform build configuration.
 - `darkghost_test`: Test executable
 - `darkghost_wallet`: CLI wallet executable
 
-### Windows Scripts
+### Scripts Directory
+
+The `scripts/` directory contains various utility scripts for development, building, and deployment:
+
+```
+scripts/
+├── build.bat              # Compile the project on Windows
+├── faucet_bot.py          # Discord faucet bot for testnet
+├── fork_monero.bat        # Fork Monero codebase (Windows)
+├── fork_monero.sh         # Fork Monero codebase (Linux/macOS)
+├── release.bat            # Create release builds (Windows)
+├── release.sh             # Create release builds (Linux/macOS)
+├── run_node.bat           # Run the DarkGhost node (Windows)
+├── setup_dev.bat          # Set up development environment (Windows)
+├── setup_dev.sh           # Set up development environment (Linux/macOS)
+├── show_new_structure.bat # Show updated project structure
+├── show_structure.bat     # Show project structure
+├── update_build.bat       # Update build with latest changes
+├── verify_logo.bat        # Verify logo implementation
+├── verify_structure.bat   # Verify project structure
+└── verify_upload.bat      # Verify GitHub upload
+```
+
+#### Windows Scripts
 
 - `build.bat`: Compile the project on Windows
 - `run_node.bat`: Run the DarkGhost node
+- `setup_dev.bat`: Set up development environment on Windows
+- `fork_monero.bat`: Fork Monero codebase for DarkGhost (Windows)
+- `update_build.bat`: Update build with latest changes
+
+#### Linux/macOS Scripts
+
+- `setup_dev.sh`: Set up development environment on Linux/macOS
+- `fork_monero.sh`: Fork Monero codebase for DarkGhost (Linux/macOS)
 
 ## Configuration Files
 
