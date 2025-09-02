@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="512" height="512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="grad" x1="0" y1="0" x2="512" y2="512">
+      <stop offset="0%" stop-color="#8A2BE2"/>
+      <stop offset="100%" stop-color="#1E0033"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background Circle -->
+  <circle cx="256" cy="256" r="240" fill="url(#grad)" stroke="#1E0033" stroke-width="10"/>
+
+  <!-- Ghost Silhouette (DarkGhost) -->
+  <g fill="#FFFFFF">
+    <!-- Head -->
+    <circle cx="256" cy="180" r="70"/>
+    <!-- Body -->
+    <path d="M186 250
+             C186 250, 146 250, 146 320
+             L146 420
+             C146 420, 166 400, 186 420
+             C206 400, 226 420, 246 400
+             C266 420, 286 400, 306 420
+             C326 400, 346 420, 366 420
+             L366 320
+             C366 320, 366 250, 326 250
+             Z"/>
+    <!-- Eyes -->
+    <circle cx="230" cy="170" r="18" fill="#1E0033"/>
+    <circle cx="282" cy="170" r="18" fill="#1E0033"/>
+    <!-- Mouth -->
+    <ellipse cx="256" cy="200" rx="20" ry="10" fill="#1E0033"/>
+  </g>
+
+  <!-- DG Symbol -->
+  <text x="256" y="480" font-family="Orbitron, sans-serif" font-size="60" font-weight="bold" fill="#FFFFFF" text-anchor="middle">DG</text>
+</svg>

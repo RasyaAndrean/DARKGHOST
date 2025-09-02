@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="assets/logo.svg" width="200" alt="DarkGhost Logo">
+</p>
+
 # DarkGhost [DG] - Hybrid Privacy Cryptocurrency
 
 ## Overview
