@@ -70,6 +70,8 @@ DarkGhost/
 
 ### Prerequisites
 
+See [BUILD_REQUIREMENTS.md](docs/BUILD_REQUIREMENTS.md) for detailed build requirements.
+
 - C++11 compatible compiler (g++, clang++, etc.)
 - CMake 3.10 or higher
 - Make build system

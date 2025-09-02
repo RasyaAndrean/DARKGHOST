@@ -215,8 +215,28 @@ scripts/
 - `DOCS.md`: Technical documentation
 - `ARCHITECTURE.md`: System architecture and design
 - `ROADMAP.md`: Development roadmap and milestones
+- `BUILD_REQUIREMENTS.md`: Build requirements and dependencies
+- `BUILD_PROCESS.md`: Build process documentation
+- `RELEASE_PROCESS.md`: Release process documentation
+- `DEVELOPMENT_SETUP.md`: Development environment setup
+- `TESTING.md`: Testing framework
+- `SECURITY.md`: Security policies
+- `API.md`: API documentation
+- `CLI.md`: Command-line interface
 - `MINING.md`: Mining guide and best practices
 - `WALLET.md`: Wallet usage and security guide
+- `COMMUNITY.md`: Community guidelines
+- `CLI_WALLET.md`: CLI wallet guide
+- `RANDOMX_V2.md`: RandomX v2 consensus algorithm
+- `PRIVACY_FEATURES.md`: Privacy features implementation
+- `UTXO_MODEL.md`: UTXO model implementation
+- `GENESIS_PARAMETERS.md`: Genesis block parameters
+- `GITHUB_ACTIONS.md`: CI/CD pipeline documentation
+- `RFC_001_RING_SIZE.md`: RFC on ring size
+- `ROADMAP_2025_2028.md`: Detailed 2025-2028 roadmap
+- `PROJECT_STATUS.md`: Current project status
+- `GITHUB_UPLOAD_COMPLETE.md`: GitHub upload confirmation
+- `PHASE_01_COMPLETION.md`: Phase 0.1 completion summary
 - `PROJECT_STRUCTURE.md`: This file
 
 ## Runtime Directories
