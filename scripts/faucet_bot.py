@@ -32,7 +32,7 @@ async def faucet(ctx):
     """Claim testnet DG tokens"""
     user_id = str(ctx.author.id)
     current_time = time.time()
-    
+
     # Check if user has claimed recently
     if user_id in user_claims:
         last_claim = user_claims[user_id]
@@ -42,15 +42,15 @@ async def faucet(ctx):
             minutes = int((remaining % 3600) // 60)
             await ctx.send(f"⏳ You can claim again in {hours} hours and {minutes} minutes!")
             return
-    
+
     # Process claim
     user_claims[user_id] = current_time
-    
+
     # In a real implementation, you would:
     # 1. Connect to the testnet wallet
     # 2. Send the specified amount to the user's address
     # 3. Verify the transaction
-    
+
     # For demonstration, we'll just send a message
     await ctx.send(f"✅ {ctx.author.mention} has claimed {FAUCET_AMOUNT} DG testnet tokens! "
                    f"Transaction ID: dg_tx_{random.randint(100000, 999999)}")

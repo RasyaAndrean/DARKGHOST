@@ -2,74 +2,74 @@ name: Build and Test
 
 on:
   push:
-    branches: [ main, develop ]
+    branches: [main, develop]
   pull_request:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
   build-ubuntu:
     runs-on: ubuntu-latest
-    
+
     steps:
-    - uses: actions/checkout@v3
-    
-    - name: Install dependencies
-      run: |
-        sudo apt-get update
-        sudo apt-get install -y build-essential cmake
-    
-    - name: Build project
-      run: |
-        mkdir build
-        cd build
-        cmake ..
-        make
-    
-    - name: Run tests
-      run: |
-        cd build
-        ./darkghost_test
+      - uses: actions/checkout@v3
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y build-essential cmake
+
+      - name: Build project
+        run: |
+          mkdir build
+          cd build
+          cmake ..
+          make
+
+      - name: Run tests
+        run: |
+          cd build
+          ./darkghost_test
 
   build-macos:
     runs-on: macos-latest
-    
+
     steps:
-    - uses: actions/checkout@v3
-    
-    - name: Install dependencies
-      run: |
-        brew install cmake
-    
-    - name: Build project
-      run: |
-        mkdir build
-        cd build
-        cmake ..
-        make
-    
-    - name: Run tests
-      run: |
-        cd build
-        ./darkghost_test
+      - uses: actions/checkout@v3
+
+      - name: Install dependencies
+        run: |
+          brew install cmake
+
+      - name: Build project
+        run: |
+          mkdir build
+          cd build
+          cmake ..
+          make
+
+      - name: Run tests
+        run: |
+          cd build
+          ./darkghost_test
 
   build-windows:
     runs-on: windows-latest
-    
+
     steps:
-    - uses: actions/checkout@v3
-    
-    - name: Install dependencies
-      run: |
-        choco install mingw cmake
-    
-    - name: Build project
-      run: |
-        mkdir build
-        cd build
-        cmake .. -G "MinGW Makefiles"
-        mingw32-make
-    
-    - name: Run tests
-      run: |
-        cd build
-        ./darkghost_test.exe
+      - uses: actions/checkout@v3
+
+      - name: Install dependencies
+        run: |
+          choco install mingw cmake
+
+      - name: Build project
+        run: |
+          mkdir build
+          cd build
+          cmake .. -G "MinGW Makefiles"
+          mingw32-make
+
+      - name: Run tests
+        run: |
+          cd build
+          ./darkghost_test.exe

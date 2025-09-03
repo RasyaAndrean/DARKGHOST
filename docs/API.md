@@ -5,6 +5,7 @@ This document describes the DarkGhost API, including JSON-RPC methods, REST endp
 ## Overview
 
 DarkGhost provides multiple API interfaces for interacting with the network:
+
 - **JSON-RPC**: Traditional JSON-RPC interface
 - **REST**: HTTP-based RESTful API
 - **WebSocket**: Real-time event notifications
@@ -13,13 +14,17 @@ DarkGhost provides multiple API interfaces for interacting with the network:
 ## JSON-RPC API
 
 ### Connection
+
 The JSON-RPC API is available at:
+
 - **Mainnet**: `http://127.0.0.1:18081/json_rpc`
 - **Testnet**: `http://127.0.0.1:28081/json_rpc`
 - **Devnet**: `http://127.0.0.1:38081/json_rpc`
 
 ### Authentication
+
 RPC authentication can be enabled with:
+
 ```bash
 ./darkghostd --rpc-login username:password
 ```
@@ -27,11 +32,13 @@ RPC authentication can be enabled with:
 ### Common Methods
 
 #### get_info
+
 Get general information about the node and network.
 
 **Parameters**: None
 
 **Response**:
+
 ```json
 {
   "id": "0",
@@ -63,11 +70,13 @@ Get general information about the node and network.
 ```
 
 #### get_block_count
+
 Get the current block count.
 
 **Parameters**: None
 
 **Response**:
+
 ```json
 {
   "id": "0",
@@ -80,9 +89,11 @@ Get the current block count.
 ```
 
 #### get_block_hash
+
 Get the block hash at a specific height.
 
 **Parameters**:
+
 ```json
 {
   "height": 12345
@@ -90,6 +101,7 @@ Get the block hash at a specific height.
 ```
 
 **Response**:
+
 ```json
 {
   "id": "0",
@@ -102,9 +114,11 @@ Get the block hash at a specific height.
 ```
 
 #### get_block_template
+
 Get a block template for mining.
 
 **Parameters**:
+
 ```json
 {
   "wallet_address": "dg1abc123...",
@@ -113,6 +127,7 @@ Get a block template for mining.
 ```
 
 **Response**:
+
 ```json
 {
   "id": "0",
@@ -131,16 +146,17 @@ Get a block template for mining.
 ```
 
 #### submit_block
+
 Submit a mined block to the network.
 
 **Parameters**:
+
 ```json
-[
-  "0100..."
-]
+["0100..."]
 ```
 
 **Response**:
+
 ```json
 {
   "id": "0",
@@ -152,42 +168,38 @@ Submit a mined block to the network.
 ```
 
 #### get_transactions
+
 Get transaction information.
 
 **Parameters**:
+
 ```json
 {
-  "txs_hashes": [
-    "abc123...",
-    "def456..."
-  ]
+  "txs_hashes": ["abc123...", "def456..."]
 }
 ```
 
 **Response**:
+
 ```json
 {
   "id": "0",
   "jsonrpc": "2.0",
   "result": {
-    "txs_as_hex": [
-      "0100..."
-    ],
-    "txs_as_json": [
-      "{\"version\":1,...}"
-    ],
-    "tx_hashes": [
-      "abc123..."
-    ],
+    "txs_as_hex": ["0100..."],
+    "txs_as_json": ["{\"version\":1,...}"],
+    "tx_hashes": ["abc123..."],
     "status": "OK"
   }
 }
 ```
 
 #### send_raw_transaction
+
 Broadcast a raw transaction to the network.
 
 **Parameters**:
+
 ```json
 {
   "tx_as_hex": "0100...",
@@ -196,6 +208,7 @@ Broadcast a raw transaction to the network.
 ```
 
 **Response**:
+
 ```json
 {
   "id": "0",
@@ -210,9 +223,11 @@ Broadcast a raw transaction to the network.
 ### Wallet Methods
 
 #### create_wallet
+
 Create a new wallet.
 
 **Parameters**:
+
 ```json
 {
   "filename": "my_wallet",
@@ -222,6 +237,7 @@ Create a new wallet.
 ```
 
 **Response**:
+
 ```json
 {
   "id": "0",
@@ -235,9 +251,11 @@ Create a new wallet.
 ```
 
 #### open_wallet
+
 Open an existing wallet.
 
 **Parameters**:
+
 ```json
 {
   "filename": "my_wallet",
@@ -246,6 +264,7 @@ Open an existing wallet.
 ```
 
 **Response**:
+
 ```json
 {
   "id": "0",
@@ -258,11 +277,13 @@ Open an existing wallet.
 ```
 
 #### close_wallet
+
 Close the currently open wallet.
 
 **Parameters**: None
 
 **Response**:
+
 ```json
 {
   "id": "0",
@@ -274,11 +295,13 @@ Close the currently open wallet.
 ```
 
 #### get_balance
+
 Get the wallet balance.
 
 **Parameters**: None
 
 **Response**:
+
 ```json
 {
   "id": "0",
@@ -292,11 +315,13 @@ Get the wallet balance.
 ```
 
 #### get_address
+
 Get the wallet address.
 
 **Parameters**: None
 
 **Response**:
+
 ```json
 {
   "id": "0",
@@ -309,9 +334,11 @@ Get the wallet address.
 ```
 
 #### transfer
+
 Send a transaction.
 
 **Parameters**:
+
 ```json
 {
   "destinations": [
@@ -327,6 +354,7 @@ Send a transaction.
 ```
 
 **Response**:
+
 ```json
 {
   "id": "0",
@@ -344,7 +372,9 @@ Send a transaction.
 ## REST API
 
 ### Base URL
+
 The REST API is available at:
+
 - **Mainnet**: `http://127.0.0.1:18081`
 - **Testnet**: `http://127.0.0.1:28081`
 - **Devnet**: `http://127.0.0.1:38081`
@@ -352,9 +382,11 @@ The REST API is available at:
 ### Endpoints
 
 #### GET /block/count
+
 Get the current block count.
 
 **Response**:
+
 ```json
 {
   "count": 12345,
@@ -363,9 +395,11 @@ Get the current block count.
 ```
 
 #### GET /block/{height}
+
 Get block information by height.
 
 **Response**:
+
 ```json
 {
   "block": {
@@ -381,9 +415,11 @@ Get block information by height.
 ```
 
 #### GET /transaction/{hash}
+
 Get transaction information by hash.
 
 **Response**:
+
 ```json
 {
   "transaction": {
@@ -398,9 +434,11 @@ Get transaction information by hash.
 ```
 
 #### GET /address/{address}
+
 Get address information.
 
 **Response**:
+
 ```json
 {
   "address": "dg1abc123...",
@@ -411,9 +449,11 @@ Get address information.
 ```
 
 #### POST /transaction/send
+
 Send a transaction.
 
 **Request**:
+
 ```json
 {
   "destinations": [
@@ -427,6 +467,7 @@ Send a transaction.
 ```
 
 **Response**:
+
 ```json
 {
   "tx_hash": "abc123...",
@@ -437,7 +478,9 @@ Send a transaction.
 ## WebSocket API
 
 ### Connection
+
 WebSocket connections are available at:
+
 - **Mainnet**: `ws://127.0.0.1:18082`
 - **Testnet**: `ws://127.0.0.1:28082`
 - **Devnet**: `ws://127.0.0.1:38082`
@@ -445,9 +488,11 @@ WebSocket connections are available at:
 ### Events
 
 #### new_block
+
 Emitted when a new block is added to the blockchain.
 
 **Data**:
+
 ```json
 {
   "height": 12345,
@@ -459,9 +504,11 @@ Emitted when a new block is added to the blockchain.
 ```
 
 #### new_transaction
+
 Emitted when a new transaction is received.
 
 **Data**:
+
 ```json
 {
   "hash": "abc123...",
@@ -471,9 +518,11 @@ Emitted when a new transaction is received.
 ```
 
 #### mempool_update
+
 Emitted when the mempool is updated.
 
 **Data**:
+
 ```json
 {
   "tx_count": 10,
@@ -482,19 +531,23 @@ Emitted when the mempool is updated.
 ```
 
 ### Subscription
+
 Subscribe to events:
+
 ```javascript
 const ws = new WebSocket('ws://127.0.0.1:18082');
 
-ws.onopen = function() {
+ws.onopen = function () {
   // Subscribe to new blocks
-  ws.send(JSON.stringify({
-    "method": "subscribe",
-    "params": ["new_block"]
-  }));
+  ws.send(
+    JSON.stringify({
+      method: 'subscribe',
+      params: ['new_block'],
+    })
+  );
 };
 
-ws.onmessage = function(event) {
+ws.onmessage = function (event) {
   const data = JSON.parse(event.data);
   console.log('Received:', data);
 };
@@ -503,6 +556,7 @@ ws.onmessage = function(event) {
 ## Library Bindings
 
 ### C++ Library
+
 ```cpp
 #include "darkghost/api.h"
 
@@ -516,6 +570,7 @@ std::cout << "Balance: " << balance.balance << std::endl;
 ```
 
 ### Python Library
+
 ```python
 from darkghost import Client
 
@@ -529,6 +584,7 @@ print(f"Balance: {balance['balance']}")
 ```
 
 ### JavaScript Library
+
 ```javascript
 const DarkGhost = require('darkghost-js');
 
@@ -546,7 +602,9 @@ client.getBalance().then(balance => {
 ## Error Handling
 
 ### JSON-RPC Errors
+
 JSON-RPC errors follow the standard format:
+
 ```json
 {
   "id": "0",
@@ -559,6 +617,7 @@ JSON-RPC errors follow the standard format:
 ```
 
 ### Common Error Codes
+
 - **-1**: General error
 - **-2**: Invalid parameters
 - **-3**: Not found
@@ -567,7 +626,9 @@ JSON-RPC errors follow the standard format:
 - **-6**: Network error
 
 ### REST API Errors
+
 REST API errors return appropriate HTTP status codes:
+
 - **400**: Bad request
 - **401**: Unauthorized
 - **404**: Not found
@@ -576,13 +637,17 @@ REST API errors return appropriate HTTP status codes:
 ## Rate Limiting
 
 ### Limits
+
 API requests are rate-limited to prevent abuse:
+
 - **JSON-RPC**: 100 requests per minute per IP
 - **REST**: 200 requests per minute per IP
 - **WebSocket**: 10 concurrent connections per IP
 
 ### Headers
+
 Rate limit information is provided in response headers:
+
 ```
 X-RateLimit-Limit: 100
 X-RateLimit-Remaining: 95
@@ -592,16 +657,21 @@ X-RateLimit-Reset: 1234567890
 ## Authentication
 
 ### RPC Authentication
+
 Enable RPC authentication with:
+
 ```bash
 ./darkghostd --rpc-login username:password
 ```
 
 ### Wallet Authentication
+
 Wallet authentication is handled through wallet files and passwords.
 
 ### API Keys
+
 For third-party services, API keys can be used:
+
 ```bash
 ./darkghostd --api-key abc123def456
 ```
@@ -609,6 +679,7 @@ For third-party services, API keys can be used:
 ## Examples
 
 ### Node Status Check
+
 ```bash
 curl -X POST http://127.0.0.1:18081/json_rpc \
   -H 'Content-Type: application/json' \
@@ -620,6 +691,7 @@ curl -X POST http://127.0.0.1:18081/json_rpc \
 ```
 
 ### Wallet Balance Check
+
 ```bash
 curl -X POST http://127.0.0.1:18081/json_rpc \
   -H 'Content-Type: application/json' \
@@ -631,6 +703,7 @@ curl -X POST http://127.0.0.1:18081/json_rpc \
 ```
 
 ### Transaction Sending
+
 ```bash
 curl -X POST http://127.0.0.1:18081/json_rpc \
   -H 'Content-Type: application/json' \
@@ -651,16 +724,19 @@ curl -X POST http://127.0.0.1:18081/json_rpc \
 ## Security Considerations
 
 ### Transport Security
+
 - **HTTPS**: Use HTTPS for production deployments
 - **TLS**: Enable TLS for RPC connections
 - **Certificates**: Use valid SSL certificates
 
 ### Authentication Security
+
 - **Strong Passwords**: Use strong RPC passwords
 - **API Keys**: Rotate API keys regularly
 - **IP Whitelisting**: Restrict access by IP address
 
 ### Input Validation
+
 - **Sanitization**: Validate all API inputs
 - **Rate Limiting**: Implement rate limiting
 - **DDoS Protection**: Protect against DDoS attacks
@@ -668,16 +744,19 @@ curl -X POST http://127.0.0.1:18081/json_rpc \
 ## Performance Optimization
 
 ### Caching
+
 - **Block Data**: Cache frequently accessed block data
 - **Transaction Data**: Cache transaction information
 - **Address Data**: Cache address balances and history
 
 ### Connection Pooling
+
 - **Database**: Use connection pooling for database access
 - **Network**: Reuse network connections
 - **RPC**: Maintain persistent RPC connections
 
 ### Compression
+
 - **Response Compression**: Enable gzip compression
 - **WebSocket**: Use compression for WebSocket messages
 - **Data Transfer**: Optimize data transfer sizes
@@ -685,11 +764,14 @@ curl -X POST http://127.0.0.1:18081/json_rpc \
 ## Versioning
 
 ### API Versioning
+
 API versions are indicated in the URL:
+
 - **v1**: `/api/v1/`
 - **v2**: `/api/v2/`
 
 ### Backward Compatibility
+
 - **Minor Versions**: Maintain backward compatibility
 - **Major Versions**: Breaking changes in major versions
 - **Deprecation**: Deprecate features with advance notice
@@ -699,12 +781,15 @@ API versions are indicated in the URL:
 ### Common Issues
 
 #### Connection Refused
+
 ```
 curl: (7) Failed to connect to 127.0.0.1 port 18081: Connection refused
 ```
+
 **Solution**: Ensure the DarkGhost node is running and listening on the correct port.
 
 #### Authentication Required
+
 ```json
 {
   "error": {
@@ -713,16 +798,21 @@ curl: (7) Failed to connect to 127.0.0.1 port 18081: Connection refused
   }
 }
 ```
+
 **Solution**: Provide valid authentication credentials.
 
 #### Rate Limit Exceeded
+
 ```
 429 Too Many Requests
 ```
+
 **Solution**: Reduce request frequency or implement exponential backoff.
 
 ### Debugging
+
 Enable debug logging:
+
 ```bash
 ./darkghostd --log-level debug
 ```
@@ -730,16 +820,19 @@ Enable debug logging:
 ## Resources
 
 ### Documentation
+
 - [JSON-RPC Specification](https://www.jsonrpc.org/specification)
 - [RESTful API Design](https://restfulapi.net/)
 - [WebSocket Protocol](https://tools.ietf.org/html/rfc6455)
 
 ### Tools
+
 - [Postman](https://www.postman.com/) - API testing
 - [curl](https://curl.se/) - Command-line HTTP client
 - [WebSocket Client](https://www.websocket.org/echo.html) - WebSocket testing
 
 ### Libraries
+
 - [json-rpc](https://github.com/json-rpc) - JSON-RPC libraries
 - [axios](https://github.com/axios/axios) - Promise-based HTTP client
 - [ws](https://github.com/websockets/ws) - WebSocket library

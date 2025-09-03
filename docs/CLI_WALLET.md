@@ -9,11 +9,13 @@ The DarkGhost CLI wallet (`darkghost_wallet`) is a command-line interface for ma
 ## Building the Wallet
 
 ### Prerequisites
+
 - C++11 compatible compiler
 - CMake 3.10 or higher
 - Make build system
 
 ### Building
+
 ```bash
 # From the project root directory
 mkdir build && cd build
@@ -22,6 +24,7 @@ make darkghost_wallet
 ```
 
 Or on Windows:
+
 ```cmd
 scripts\build.bat
 ```
@@ -29,11 +32,13 @@ scripts\build.bat
 ## Running the Wallet
 
 ### Starting the Wallet
+
 ```bash
 ./darkghost_wallet
 ```
 
 Or on Windows:
+
 ```cmd
 build\darkghost_wallet.exe
 ```
@@ -43,7 +48,9 @@ build\darkghost_wallet.exe
 Once the wallet is running, you can use the following commands:
 
 #### `help`
+
 Display available commands:
+
 ```
 DarkGhost> help
 Available commands:
@@ -56,7 +63,9 @@ Available commands:
 ```
 
 #### `address`
+
 Display your wallet address and stealth address:
+
 ```
 DarkGhost> address
 Wallet Address: abc123...
@@ -64,7 +73,9 @@ Stealth Address: dg1xyz...
 ```
 
 #### `balance`
+
 Show your wallet balance:
+
 ```
 DarkGhost> balance
 Balance: 1000.00 DG
@@ -72,7 +83,9 @@ Atomic Units: 100000000000
 ```
 
 #### `send`
+
 Send DarkGhost coins to another address:
+
 ```
 DarkGhost> send
 Recipient address: dg1recipient...
@@ -83,7 +96,9 @@ Recipient: dg1recipient...
 ```
 
 #### `receive`
+
 Generate a new stealth address for receiving payments:
+
 ```
 DarkGhost> receive
 Generating new stealth address for receiving...
@@ -92,7 +107,9 @@ dg1newstealthaddress...
 ```
 
 #### `exit`
+
 Exit the wallet:
+
 ```
 DarkGhost> exit
 Exiting DarkGhost wallet...
@@ -101,11 +118,13 @@ Exiting DarkGhost wallet...
 ## Wallet Features
 
 ### Privacy Features
+
 - **RingCT Transactions**: All transactions use Ring Confidential Transactions with 11-ring size by default
 - **Stealth Addresses**: Each transaction uses a one-time address to prevent linking
 - **Bulletproofs**: Transaction amounts are encrypted using Bulletproofs range proofs
 
 ### Security Features
+
 - **Key Management**: Secure generation and storage of private keys
 - **View Keys**: Support for view-only wallets to monitor incoming transactions
 - **Encryption**: Wallet files are encrypted at rest
@@ -131,6 +150,7 @@ The CLI wallet currently uses default parameters, but future versions will suppo
 ## Future Enhancements
 
 Planned features for the CLI wallet:
+
 1. Configuration file support
 2. Wallet import/export functionality
 3. Multi-signature transactions
@@ -141,6 +161,7 @@ Planned features for the CLI wallet:
 ## Contributing
 
 To contribute to the CLI wallet development:
+
 1. Review the existing code in [`src/wallet/cli_wallet.cpp`](../src/wallet/cli_wallet.cpp)
 2. Follow the coding standards in [STYLE_GUIDE.md](STYLE_GUIDE.md)
 3. Add tests for new functionality

@@ -33,11 +33,13 @@ This directory contains various scripts to help with development, building, and 
 ### Building DarkGhost
 
 **Windows:**
+
 ```cmd
 scripts\build.bat
 ```
 
 **Linux/macOS:**
+
 ```bash
 chmod +x scripts/build.sh
 scripts/build.sh
@@ -46,11 +48,13 @@ scripts/build.sh
 ### Setting up Development Environment
 
 **Windows:**
+
 ```cmd
 scripts\setup_dev.bat
 ```
 
 **Linux/macOS:**
+
 ```bash
 chmod +x scripts/setup_dev.sh
 scripts/setup_dev.sh
@@ -59,6 +63,7 @@ scripts/setup_dev.sh
 ### Running the Node
 
 **Windows:**
+
 ```cmd
 scripts\run_node.bat
 ```
@@ -66,11 +71,13 @@ scripts\run_node.bat
 ### Forking Monero (Initial Setup)
 
 **Windows:**
+
 ```cmd
 scripts\fork_monero.bat
 ```
 
 **Linux/macOS:**
+
 ```bash
 chmod +x scripts/fork_monero.sh
 scripts/fork_monero.sh

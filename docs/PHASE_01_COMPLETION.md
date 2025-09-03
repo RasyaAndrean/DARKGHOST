@@ -5,6 +5,7 @@ This document summarizes the completion of Phase 0.1 of the DarkGhost developmen
 ## Overview
 
 Phase 0.1 focused on establishing the foundation for DarkGhost development, including:
+
 - Forking Monero codebase and adapting it for DarkGhost
 - Removing tail emission and implementing fixed supply
 - Changing coin name, ticker, and magic bytes
@@ -14,6 +15,7 @@ Phase 0.1 focused on establishing the foundation for DarkGhost development, incl
 ## Completed Tasks
 
 ### Core Implementation
+
 - ✅ Forked Monero codebase and adapted for DarkGhost
 - ✅ Removed tail emission mechanism
 - ✅ Implemented fixed supply of 100 million DG
@@ -24,6 +26,7 @@ Phase 0.1 focused on establishing the foundation for DarkGhost development, incl
 - ✅ Created genesis parameters in [`src/core/genesis.h`](../src/core/genesis.h)
 
 ### Documentation
+
 - ✅ Created detailed 2025-2028 roadmap in [ROADMAP_2025_2028.md](ROADMAP_2025_2028.md)
 - ✅ Documented genesis parameters in [GENESIS_PARAMETERS.md](GENESIS_PARAMETERS.md)
 - ✅ Established project status tracking in [PROJECT_STATUS.md](PROJECT_STATUS.md)
@@ -45,6 +48,7 @@ Phase 0.1 focused on establishing the foundation for DarkGhost development, incl
 - ✅ Created wallet guide in [WALLET.md](WALLET.md)
 
 ### Scripts and Tools
+
 - ✅ Created Monero fork scripts ([fork_monero.bat](../scripts/fork_monero.bat), [fork_monero.sh](../scripts/fork_monero.sh))
 - ✅ Developed development setup scripts ([setup_dev.bat](../scripts/setup_dev.bat), [setup_dev.sh](../scripts/setup_dev.sh))
 - ✅ Created release scripts ([release.bat](../scripts/release.bat), [release.sh](../scripts/release.sh))
@@ -53,6 +57,7 @@ Phase 0.1 focused on establishing the foundation for DarkGhost development, incl
 - ✅ Developed project structure display scripts ([show_new_structure.bat](../scripts/show_new_structure.bat), [show_new_structure.sh](../scripts/show_new_structure.sh))
 
 ### Infrastructure
+
 - ✅ Set up GitHub Actions CI/CD pipeline in [.github/workflows/build.yml](../.github/workflows/build.yml)
 - ✅ Updated CMakeLists.txt to include new files
 - ✅ Updated project structure documentation
@@ -68,18 +73,21 @@ Phase 0.1 focused on establishing the foundation for DarkGhost development, incl
 ## Next Steps
 
 ### Sprint 0.2 (Next 2 Weeks)
+
 - Integrate RandomX v2 with DarkGhost-specific tweaks
 - Set up local regtest/devnet with 3 internal nodes
 - Implement Discord faucet bot
 - Begin testing with internal team
 
 ### Sprint 0.3 (Following 2 Weeks)
+
 - Develop CLI wallet based on monero-wallet-cli
 - Implement RingCT 11-ring encryption with Bulletproofs+
 - Begin writing/finalizing whitepaper v1.0
 - Prepare for public alpha release
 
 ### Long-term Planning
+
 - Set up Discord and Telegram developer channels
 - Launch RFC process for community input
 - Begin planning for testnet launch
@@ -88,6 +96,7 @@ Phase 0.1 focused on establishing the foundation for DarkGhost development, incl
 ## Repository Status
 
 The repository has been successfully updated with all Phase 0.1 deliverables:
+
 - **Commit**: 8116bd4 - "Phase 0.1 implementation: Complete roadmap and documentation for 2025-2028"
 - **Branch**: main
 - **Repository**: https://github.com/RasyaAndrean/DARKGHOST
@@ -105,4 +114,4 @@ Email: rasyaandrean@outlook.co.id
 
 ---
 
-*This document marks the successful completion of Phase 0.1 and the beginning of Phase 0.2 development.*
+_This document marks the successful completion of Phase 0.1 and the beginning of Phase 0.2 development._
