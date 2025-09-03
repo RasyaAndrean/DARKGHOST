@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Blocks - <%= coin %> Devnet Explorer</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div class="container">
+        <a class="navbar-brand" href="/"><%= coin %> Explorer</a>
+        <div class="navbar-nav ms-auto">
+          <a class="nav-link" href="/">Home</a>
+          <a class="nav-link active" href="/blocks">Blocks</a>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container mt-4">
+      <div class="row">
+        <div class="col-md-12">
+          <h1>Blocks</h1>
+          <p>Listing all blocks on the <%= coin %> blockchain</p>
+        </div>
+      </div>
+
+      <div class="row mt-4">
+        <div class="col-md-12">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>Height</th>
+                <th>Age</th>
+                <th>Hash</th>
+                <th>Transactions</th>
+                <th>Size</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% blocks.forEach(block => { %>
+              <tr>
+                <td>
+                  <a href="/block/<%= block.height %>"><%= block.height %></a>
+                </td>
+                <td><%= moment(block.timestamp).fromNow() %></td>
+                <td><%= block.hash.substring(0, 16) %>...</td>
+                <td><%= block.txCount %></td>
+                <td><%= block.size %> bytes</td>
+              </tr>
+              <% }); %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="row mt-4">
+        <div class="col-md-12">
+          <nav>
+            <ul class="pagination">
+              <li class="page-item disabled">
+                <a class="page-link" href="#">Previous</a>
+              </li>
+              <li class="page-item active">
+                <a class="page-link" href="#">1</a>
+              </li>
+              <li class="page-item disabled">
+                <a class="page-link" href="#">Next</a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </div>
+
+    <footer class="footer mt-5 py-3 bg-light">
+      <div class="container text-center">
+        <span class="text-muted"><%= coin %> Devnet Explorer v0.1.0</span>
+      </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+  </body>
+</html>

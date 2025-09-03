@@ -22,6 +22,16 @@ DarkGhost is a privacy-focused cryptocurrency that combines Bitcoin's UTXO model
 | **Block Time**        | 2 minutes                               | 10 minutes         | 2 minutes                       |
 | **Scalability**       | Dynamic block size                      | Limited block size | Dynamic block size              |
 
+## Development Progress
+
+### Sprint 0.2 (September 2025)
+
+- [Sprint 0.2 Summary](SPRINT_0_2_SUMMARY.md)
+- [Sprint 0.2 Deliverables](SPRINT_0_2_DELIVERABLES.md)
+- [RandomX v2 Tweaks](RANDOMX_V2_TWEAKS.md)
+- [Devnet Explorer](DEVNET_EXPLORER.md)
+- [RFC-001 Ring Size Vote](RFC-001_RING_SIZE_VOTE.md)
+
 ## Roadmap
 
 ### Phase 0 (Months 1-2)

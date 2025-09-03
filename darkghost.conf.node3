@@ -1,0 +1,44 @@
+# DarkGhost Node 3 Configuration (Peer Node)
+# Devnet Configuration
+
+# Network settings
+devnet=1
+mainnet=0
+testnet=0
+
+# Data directory
+data-dir=/data
+
+# P2P network settings
+p2p-bind-ip=0.0.0.0
+p2p-bind-port=18080
+out-peers=32
+in-peers=64
+
+# RPC settings
+rpc-bind-ip=0.0.0.0
+rpc-bind-port=18081
+confirm-external-bind=1
+
+# ZMQ settings
+zmq-rpc-bind-ip=0.0.0.0
+zmq-rpc-bind-port=18082
+
+# Connect to bootstrap node
+add-peer=172.20.0.10:18080
+
+# Logging
+log-file=/data/darkghost.log
+log-level=info
+
+# Performance settings
+max-concurrency=4
+block-sync-size=10
+
+# Mining settings (for testing)
+start-mining=1
+mining-threads=2
+mining-address=dg1Node3WalletAddress1234567890
+
+# Genesis settings for devnet
+genesis-block-hash=0000000000000000000000000000000000000000000000000000000000000000

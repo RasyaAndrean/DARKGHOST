@@ -31,7 +31,7 @@ const uint32_t HALVING_INTERVAL =
 const bool TAIL_EMISSION = false; // No tail emission - fixed supply
 
 // Privacy parameters
-const uint32_t DEFAULT_RING_SIZE = 11; // 10 decoys + 1 real
+const uint32_t DEFAULT_RING_SIZE = 17; // 16 decoys + 1 real (increased from 11)
 const uint32_t MIN_RING_SIZE = 5;
 const uint32_t MAX_RING_SIZE = 32;
 

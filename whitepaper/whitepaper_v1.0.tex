@@ -1,0 +1,283 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{geometry}
+\usepackage{fancyhdr}
+
+% Page setup
+\geometry{a4paper, margin=1in}
+\setlength{\headheight}{15pt}
+
+% Header and footer
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{DarkGhost v1.0}
+\lhead{Hybrid Privacy Cryptocurrency}
+\rfoot{\thepage}
+
+% Title information
+\title{DarkGhost: A Hybrid Privacy Cryptocurrency\\
+\large Combining Bitcoin's UTXO Model with Monero's Privacy Features}
+\author{
+Rasya Andrean\\
+\texttt{rasyaandrean@outlook.co.id}\\
+\and
+DarkGhost Development Team\\
+\texttt{team@darkghost.network}
+}
+\date{September 2025}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+DarkGhost is a revolutionary hybrid cryptocurrency that combines the best features of Bitcoin and Monero. It implements Bitcoin's UTXO model for scalability and efficiency while incorporating Monero's advanced privacy features to ensure complete transaction confidentiality. This whitepaper presents the technical design, implementation details, and security analysis of DarkGhost, demonstrating how it achieves both scalability and privacy without compromising either.
+\end{abstract}
+
+\tableofcontents
+\newpage
+
+\section{Introduction}
+\subsection{Background}
+Cryptocurrencies have evolved significantly since the introduction of Bitcoin in 2009. While Bitcoin introduced the world to decentralized digital currency, it lacks privacy features that are essential for financial confidentiality. Monero, launched in 2014, addressed privacy concerns but at the cost of scalability due to its account-based model and unlimited supply.
+
+\subsection{Motivation}
+DarkGhost aims to create a cryptocurrency that offers:
+\begin{itemize}
+    \item Bitcoin's efficient UTXO transaction model
+    \item Monero's advanced privacy features
+    \item Fixed supply with no inflation
+    \item Fast block confirmation times
+    \item ASIC-resistant mining algorithm
+\end{itemize}
+
+\subsection{Contributions}
+This paper presents:
+\begin{itemize}
+    \item A novel hybrid architecture combining UTXO and privacy features
+    \item Implementation of RandomX v2 for ASIC resistance
+    \item RingCT with enhanced ring sizes for improved privacy
+    \item Bulletproofs+ for efficient range proofs
+    \item Comprehensive security analysis
+\end{itemize}
+
+\section{Technical Design}
+\subsection{Architecture Overview}
+DarkGhost implements a modular architecture with the following components:
+\begin{itemize}
+    \item Blockchain layer with UTXO model
+    \item Consensus layer with RandomX v2
+    \item Privacy layer with RingCT and Bulletproofs+
+    \item Network layer for peer-to-peer communication
+    \item Wallet layer for user interaction
+\end{itemize}
+
+\subsection{UTXO Model}
+Unlike Monero's account-based model, DarkGhost uses Bitcoin's UTXO model for transaction processing. This provides:
+\begin{itemize}
+    \item Better scalability
+    \item More efficient transaction validation
+    \item Simplified transaction structure
+\end{itemize}
+
+\subsection{Consensus Mechanism}
+DarkGhost uses RandomX v2, an ASIC-resistant Proof-of-Work algorithm optimized for CPU mining.
+
+\subsubsection{RandomX v2 Enhancements}
+Our implementation includes:
+\begin{itemize}
+    \item Increased scratchpad size (2MB)
+    \item Larger dataset (256MB)
+    \item Extended program size (512 instructions)
+    \item More iterations (1024 per program)
+\end{itemize}
+
+\subsection{Privacy Features}
+DarkGhost implements Monero's privacy features with enhancements:
+
+\subsubsection{Ring Confidential Transactions (RingCT)}
+RingCT uses ring signatures to obscure transaction origins:
+\begin{itemize}
+    \item Default ring size: 17 (16 decoys + 1 real)
+    \item Pedersen commitments for amount hiding
+    \item Schnorr signatures for authentication
+\end{itemize}
+
+\subsubsection{Bulletproofs+}
+Bulletproofs+ provides efficient range proofs:
+\begin{itemize}
+    \item 80\% reduction in proof size compared to Borromean
+    \item Aggregatable for multiple transactions
+    \item Non-interactive zero-knowledge proofs
+\end{itemize}
+
+\subsubsection{Stealth Addresses}
+One-time addresses for each transaction:
+\begin{itemize}
+    \item Unlinkability between transactions
+    \item Scan keys for wallet discovery
+    \item View keys for transaction monitoring
+\end{itemize}
+
+\section{Implementation}
+\subsection{Core Components}
+\subsubsection{Blockchain}
+The blockchain implements:
+\begin{itemize}
+    \item UTXO set management
+    \item Block validation
+    \item Transaction processing
+    \item Supply tracking
+\end{itemize}
+
+\subsubsection{Consensus}
+RandomX v2 implementation includes:
+\begin{itemize}
+    \item Scratchpad initialization
+    \item Program execution
+    \item Hash computation
+    \item Difficulty adjustment
+\end{itemize}
+
+\subsubsection{Privacy}
+Privacy components include:
+\begin{itemize}
+    \item Ring signature generation
+    \item Range proof creation
+    \item Address generation
+    \item Key management
+\end{itemize}
+
+\subsection{Network Protocol}
+The P2P network implements:
+\begin{itemize}
+    \item Node discovery
+    \item Block propagation
+    \item Transaction relay
+    \item Peer management
+\end{itemize}
+
+\subsection{Wallet}
+The wallet provides:
+\begin{itemize}
+    \item Key generation
+    \item Transaction creation
+    \item Balance tracking
+    \item Address management
+\end{itemize}
+
+\section{Security Analysis}
+\subsection{Transaction Privacy}
+DarkGhost provides strong privacy guarantees:
+\begin{itemize}
+    \item Sender anonymity through ring signatures
+    \item Amount confidentiality through range proofs
+    \item Receiver unlinkability through stealth addresses
+\end{itemize}
+
+\subsection{Network Security}
+Network security features include:
+\begin{itemize}
+    \item Sybil attack resistance
+    \item Eclipse attack prevention
+    \item DoS protection
+\end{itemize}
+
+\subsection{Implementation Security}
+Implementation security measures:
+\begin{itemize}
+    \item Memory safety
+    \item Side-channel resistance
+    \item Cryptographic best practices
+\end{itemize}
+
+\section{Performance Evaluation}
+\subsection{Transaction Processing}
+Performance metrics:
+\begin{itemize}
+    \item Block time: 2 minutes
+    \item Transaction throughput: 1000+ TPS
+    \item Verification time: < 100ms per transaction
+\end{itemize}
+
+\subsection{Resource Usage}
+Resource requirements:
+\begin{itemize}
+    \item Memory: 4GB RAM minimum
+    \item Storage: 50GB initial sync
+    \item Bandwidth: 10 Mbps minimum
+\end{itemize}
+
+\subsection{Scalability}
+Scalability features:
+\begin{itemize}
+    \item Dynamic block size
+    \item Compact transaction format
+    \item Efficient pruning
+\end{itemize}
+
+\section{Economic Model}
+\subsection{Supply Schedule}
+DarkGhost has a fixed supply:
+\begin{itemize}
+    \item Total supply: 100 million DG
+    \item No tail emission
+    \item Halving every 4 years
+\end{itemize}
+
+\subsection{Mining Rewards}
+Mining incentives:
+\begin{itemize}
+    \item Initial block reward: 50 DG
+    \item Halving interval: 262,800 blocks
+    \item Transaction fees: 0.0001 DG minimum
+\end{itemize}
+
+\section{Governance}
+\subsection{Decentralized Governance}
+Governance mechanisms:
+\begin{itemize}
+    \item Community voting through RFCs
+    \item On-chain governance proposals
+    \item Decentralized development funding
+\end{itemize}
+
+\section{Roadmap}
+\subsection{Development Phases}
+\begin{itemize}
+    \item Phase 0: Foundation (Completed)
+    \item Phase 0.2: Devnet Infrastructure (Completed)
+    \item Phase 0.3: CLI Wallet \& Whitepaper (Current)
+    \item Phase 1: Public Testnet (October 2025)
+    \item Phase 2: Mainnet Launch (Q2 2026)
+\end{itemize}
+
+\section{Conclusion}
+DarkGhost represents a significant advancement in cryptocurrency design by successfully combining the scalability benefits of Bitcoin's UTXO model with the privacy features of Monero. Through careful engineering and implementation, we have created a cryptocurrency that offers both efficiency and privacy without compromising either.
+
+\section*{Acknowledgments}
+We thank the open-source community, particularly the Bitcoin and Monero developers, whose work forms the foundation of DarkGhost.
+
+\begin{thebibliography}{9}
+\bibitem{bitcoin}
+S. Nakamoto, "Bitcoin: A Peer-to-Peer Electronic Cash System," \url{https://bitcoin.org/bitcoin.pdf}, 2008.
+
+\bibitem{monero}
+M. Noether, "Ring Confidential Transactions," \url{https://eprint.iacr.org/2015/1098.pdf}, 2015.
+
+\bibitem{randomx}
+T. Gregor, "RandomX: Proof of Work Algorithm for CPUs," \url{https://github.com/tevador/RandomX}, 2019.
+
+\bibitem{bulletproofs}
+B. Bünz, J. Bootle, D. Boneh, A. Poelstra, P. Wuille, and G. Maxwell, "Bulletproofs: Short Proofs for Confidential Transactions and More," \url{https://eprint.iacr.org/2017/1066.pdf}, 2017.
+
+\bibitem{bulletproofsplus}
+B. Bünz, B. Fisch, and A. Terekhov, "Bulletproofs+: Shorter Proofs for Privacy-Enhanced Distributed Ledger," \url{https://eprint.iacr.org/2020/735.pdf}, 2020.
+\end{thebibliography}
+
+\end{document}

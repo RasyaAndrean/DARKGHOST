@@ -1,0 +1,38 @@
+{
+  "name": "darkghost-explorer",
+  "version": "0.1.0",
+  "description": "DarkGhost Devnet Blockchain Explorer",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js",
+    "test": "jest"
+  },
+  "keywords": [
+    "darkghost",
+    "blockchain",
+    "explorer",
+    "cryptocurrency"
+  ],
+  "author": "DarkGhost Development Team",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.0",
+    "mongoose": "^6.0.0",
+    "axios": "^0.27.0",
+    "ejs": "^3.1.0",
+    "moment": "^2.29.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.0",
+    "jest": "^28.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/RasyaAndrean/DarkGhost.git"
+  },
+  "bugs": {
+    "url": "https://github.com/RasyaAndrean/DarkGhost/issues"
+  },
+  "homepage": "https://explorer.darkghost.network"
+}

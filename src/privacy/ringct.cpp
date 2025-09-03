@@ -11,7 +11,7 @@ RingCT::~RingCT() {
 
 void RingCT::initialize() {
   std::cout << "Initializing RingCT privacy protocol..." << std::endl;
-  std::cout << "Ring size: " << ring_size << " (10 decoys + 1 real)"
+  std::cout << "Ring size: " << ring_size << " (16 decoys + 1 real)"
             << std::endl;
   std::cout << "Using Pedersen commitments for amount encryption" << std::endl;
 }
@@ -28,6 +28,8 @@ bool RingCT::createTransaction(
   // Each decoy set should have ring_size-1 elements
   for (const auto &decoy_set : decoy_sets) {
     if (decoy_set.size() != ring_size - 1) {
+      std::cout << "Invalid decoy set size. Expected: " << (ring_size - 1)
+                << ", Got: " << decoy_set.size() << std::endl;
       return false;
     }
   }

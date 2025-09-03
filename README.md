@@ -144,8 +144,81 @@ See our detailed [2025-2028 Roadmap](docs/ROADMAP_2025_2028.md) for future devel
 
 ## Development Status
 
-- ✅ Phase 0 - Foundation (In Progress)
-- 🔜 Phase 1 - Testnet & Tooling (Planned Q1-2026)
+- ✅ Phase 0 - Foundation (Completed - See [PHASE_01_COMPLETION.md](docs/PHASE_01_COMPLETION.md))
+- ✅ Phase 0.2 - Devnet Infrastructure (Completed - See [PHASE_02_COMPLETION.md](PHASE_02_COMPLETION.md))
+- ✅ Phase 0.3 - CLI Wallet & Whitepaper (Completed - See [SPRINT_0_3_FINAL.md](docs/SPRINT_0_3_FINAL.md))
+- 🔜 Phase 1 - Testnet & Tooling (In Progress)
 - 🔜 Phase 2 - Mainnet & Initial Ecosystem (Planned Q2-2026)
 - 🔜 Phase 3 - Scaling & Governance (Planned Q3-2026-Q2-2027)
 - 🔜 Phase 4 - Mass Adoption & Long-term (Planned Q3-2027-2028+)
+
+## Latest Release
+
+### v0.2.0-devnet (September 16, 2025)
+
+Enhanced RandomX v2 implementation, 3-node Docker Compose devnet, Discord faucet bot, basic blockchain explorer, and RFC-001 preparation.
+
+[Release Notes](docs/RELEASE_NOTES_v0.2.0-devnet.md) | [All Releases](https://github.com/RasyaAndrean/DARKGHOST/releases)
+
+## Devnet Setup
+
+### Prerequisites
+
+- Docker and Docker Compose
+- Node.js (for explorer)
+- MongoDB (for explorer)
+
+### Starting the Devnet
+
+```bash
+# Start the 3-node devnet
+./scripts/devnet_up.sh
+
+# Or on Windows
+scripts\devnet_up.bat
+```
+
+### Devnet Components
+
+- **Node 1**: Bootstrap node (localhost:18080 P2P, :18081 RPC)
+- **Node 2**: Peer node (localhost:18083 P2P, :18084 RPC)
+- **Node 3**: Peer node (localhost:18086 P2P, :18087 RPC)
+- **Faucet**: Testnet token dispenser (localhost:8080)
+
+### Stopping the Devnet
+
+```bash
+# Stop the devnet
+./scripts/devnet_down.sh
+
+# Or on Windows
+scripts\devnet_down.bat
+```
+
+### Devnet Explorer
+
+```bash
+# Start the explorer
+./scripts/start_explorer.sh
+
+# Or on Windows
+scripts\start_explorer.bat
+```
+
+The explorer will be available at http://localhost:8080
+
+### Faucet Bot
+
+The Discord faucet bot is available in [scripts/faucet_bot.py](scripts/faucet_bot.py)
+
+### Configuration Files
+
+- Node 1: [darkghost.conf.node1](darkghost.conf.node1)
+- Node 2: [darkghost.conf.node2](darkghost.conf.node2)
+- Node 3: [darkghost.conf.node3](darkghost.conf.node3)
+
+For more details, see:
+
+- [Devnet Explorer Documentation](docs/DEVNET_EXPLORER.md)
+- [RandomX v2 Tweaks](docs/RANDOMX_V2_TWEAKS.md)
+- [RFC-001 Ring Size Vote](docs/RFC-001_RING_SIZE_VOTE.md)

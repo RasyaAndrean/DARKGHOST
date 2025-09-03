@@ -1,6 +1,7 @@
 #ifndef DARKGHOST_RINGCT_H
 #define DARKGHOST_RINGCT_H
 
+#include "../core/genesis.h"
 #include <cstdint>
 #include <string>
 #include <vector>
@@ -27,7 +28,8 @@ public:
 
 private:
   uint32_t ring_size;
-  const uint32_t DEFAULT_RING_SIZE = 11; // 10 decoys + 1 real
+  const uint32_t DEFAULT_RING_SIZE =
+      Genesis::DEFAULT_RING_SIZE; // 16 decoys + 1 real
 };
 
 #endif // DARKGHOST_RINGCT_H

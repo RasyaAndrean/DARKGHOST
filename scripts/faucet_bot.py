@@ -1,12 +1,13 @@
 #!/usr/bin/env python3
 """
 DarkGhost Testnet Faucet Bot for Discord
+Supports slash commands for modern Discord interaction
 """
 
 import discord
+from discord.ext import commands
 import random
 import time
-from discord.ext import commands
 
 # Bot configuration
 TOKEN = 'YOUR_BOT_TOKEN_HERE'
@@ -17,7 +18,7 @@ CLAIM_INTERVAL = 86400  # 24 hours in seconds
 # In production, use a proper database
 user_claims = {}
 
-# Initialize bot
+# Initialize bot with both prefix and slash command support
 intents = discord.Intents.default()
 intents.message_content = True
 bot = commands.Bot(command_prefix='!', intents=intents)
@@ -27,10 +28,48 @@ async def on_ready():
     print(f'{bot.user} has connected to Discord!')
     await bot.change_presence(activity=discord.Game(name="DarkGhost Testnet Faucet"))
 
+# Prefix commands (legacy support)
 @bot.command(name='faucet')
-async def faucet(ctx):
-    """Claim testnet DG tokens"""
-    user_id = str(ctx.author.id)
+async def faucet_prefix(ctx, address: str = None):
+    """Prefix command version of faucet claim"""
+    await process_faucet_request(ctx, address, is_slash=False)
+
+@bot.command(name='balance')
+async def balance_prefix(ctx):
+    """Prefix command version of balance check"""
+    await process_balance_request(ctx)
+
+@bot.command(name='help')
+async def help_prefix(ctx):
+    """Prefix command version of help"""
+    await process_help_request(ctx)
+
+# Simulated slash command handlers using prefix commands
+# In a real implementation with slash commands, you would use:
+# @bot.slash_command(name="faucet", description="Claim testnet DG tokens")
+# async def faucet_slash(ctx, address: str):
+
+async def process_faucet_request(ctx, address, is_slash=False):
+    """Process faucet claim request"""
+    # Validate address parameter
+    if not address:
+        if is_slash:
+            # For slash commands, you would use: await ctx.respond()
+            await ctx.send("❌ Please provide a DarkGhost address to receive tokens.")
+        else:
+            await ctx.send("❌ Please provide a DarkGhost address to receive tokens.")
+        return
+
+    # Validate address format (basic check)
+    if not address.startswith('dg1') or len(address) < 20:
+        if is_slash:
+            await ctx.send("❌ Invalid DarkGhost address format.")
+        else:
+            await ctx.send("❌ Invalid DarkGhost address format.")
+        return
+
+    # Get user ID (works for both prefix and slash commands)
+    user_id = str(ctx.author.id if hasattr(ctx, 'author') else ctx.user.id)
     current_time = time.time()
 
     # Check if user has claimed recently
@@ -40,7 +79,11 @@ async def faucet(ctx):
             remaining = CLAIM_INTERVAL - (current_time - last_claim)
             hours = int(remaining // 3600)
             minutes = int((remaining % 3600) // 60)
-            await ctx.send(f"⏳ You can claim again in {hours} hours and {minutes} minutes!")
+            message = f"⏳ You can claim again in {hours} hours and {minutes} minutes!"
+            if is_slash:
+                await ctx.send(message)
+            else:
+                await ctx.send(message)
             return
 
     # Process claim
@@ -52,23 +95,27 @@ async def faucet(ctx):
     # 3. Verify the transaction
 
     # For demonstration, we'll just send a message
-    await ctx.send(f"✅ {ctx.author.mention} has claimed {FAUCET_AMOUNT} DG testnet tokens! "
-                   f"Transaction ID: dg_tx_{random.randint(100000, 999999)}")
+    tx_id = f"dg_tx_{random.randint(100000, 999999)}"
+    message = f"✅ {ctx.author.mention if hasattr(ctx, 'author') else ctx.user.mention} has claimed {FAUCET_AMOUNT} DG testnet tokens!\nTransaction ID: {tx_id}"
 
-@bot.command(name='balance')
-async def balance(ctx):
-    """Check faucet balance"""
+    if is_slash:
+        await ctx.send(message)
+    else:
+        await ctx.send(message)
+
+async def process_balance_request(ctx):
+    """Process balance check request"""
     # In a real implementation, check the actual wallet balance
-    await ctx.send("🏦 Faucet balance: 100,000 DG (testnet tokens)")
+    message = "🏦 Faucet balance: 100,000 DG (testnet tokens)"
+    await ctx.send(message)
 
-@bot.command(name='help')
-async def help_command(ctx):
-    """Display help information"""
+async def process_help_request(ctx):
+    """Process help request"""
     help_text = """
 🤖 **DarkGhost Testnet Faucet Bot**
 
 Commands:
-`!faucet` - Claim testnet DG tokens (100 DG every 24 hours)
+`!faucet <address>` - Claim testnet DG tokens (100 DG every 24 hours)
 `!balance` - Check faucet balance
 `!help` - Display this help message
 

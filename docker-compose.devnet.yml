@@ -1,0 +1,102 @@
+version: '3.8'
+
+services:
+  # Node 1 - Bootstrap node
+  node1:
+    build: .
+    container_name: darkghost-node1
+    ports:
+      - "18080:18080"  # P2P port
+      - "18081:18081"  # RPC port
+      - "18082:18082"  # ZMQ port
+    volumes:
+      - ./data/node1:/data
+      - ./darkghost.conf.node1:/darkghost.conf
+    command: [
+      "/darkghostd",
+      "--data-dir=/data",
+      "--config-file=/darkghost.conf",
+      "--p2p-bind-ip=0.0.0.0",
+      "--rpc-bind-ip=0.0.0.0",
+      "--confirm-external-bind"
+    ]
+    networks:
+      darkghost-net:
+        ipv4_address: 172.20.0.10
+
+  # Node 2 - Peer node
+  node2:
+    build: .
+    container_name: darkghost-node2
+    ports:
+      - "18083:18080"  # P2P port
+      - "18084:18081"  # RPC port
+      - "18085:18082"  # ZMQ port
+    volumes:
+      - ./data/node2:/data
+      - ./darkghost.conf.node2:/darkghost.conf
+    command: [
+      "/darkghostd",
+      "--data-dir=/data",
+      "--config-file=/darkghost.conf",
+      "--p2p-bind-ip=0.0.0.0",
+      "--rpc-bind-ip=0.0.0.0",
+      "--confirm-external-bind",
+      "--add-peer=172.20.0.10:18080"
+    ]
+    networks:
+      darkghost-net:
+        ipv4_address: 172.20.0.11
+    depends_on:
+      - node1
+
+  # Node 3 - Peer node
+  node3:
+    build: .
+    container_name: darkghost-node3
+    ports:
+      - "18086:18080"  # P2P port
+      - "18087:18081"  # RPC port
+      - "18088:18082"  # ZMQ port
+    volumes:
+      - ./data/node3:/data
+      - ./darkghost.conf.node3:/darkghost.conf
+    command: [
+      "/darkghostd",
+      "--data-dir=/data",
+      "--config-file=/darkghost.conf",
+      "--p2p-bind-ip=0.0.0.0",
+      "--rpc-bind-ip=0.0.0.0",
+      "--confirm-external-bind",
+      "--add-peer=172.20.0.10:18080"
+    ]
+    networks:
+      darkghost-net:
+        ipv4_address: 172.20.0.12
+    depends_on:
+      - node1
+
+  # Faucet service
+  faucet:
+    build: .
+    container_name: darkghost-faucet
+    ports:
+      - "8080:8080"  # Faucet API port
+    volumes:
+      - ./faucet_data:/data
+    command: [
+      "python3",
+      "/scripts/faucet_bot.py"
+    ]
+    networks:
+      darkghost-net:
+        ipv4_address: 172.20.0.20
+    depends_on:
+      - node1
+
+networks:
+  darkghost-net:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/24
